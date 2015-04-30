@@ -1,0 +1,142 @@
+<?php $this->headScript()->appendFile('/js/modules/users/validateusers.js') ?> 
+<?php $disabled = ($this->dataUser['EDITAR']==0 && $this->dataUser['LECTURA']==1) ? 'disabled':'';?>
+<div class="row panel-data">
+    <input id="hRefLinkMain" type="hidden" value="/admin/users/index" />
+	<div class="span12">
+		<!-- block -->
+        <div class="block">
+            <div class="navbar navbar-inner block-header">
+                <div class="muted pull-left">
+					<a href="javascript:backToMain()">
+						<i class="icon-circle-arrow-left fa-1"></i></a>
+                	Información del Usuario</div>
+            </div>
+            <div class="block-content collapse in">
+                <div class="span12">
+					<?php if($this->dataUser['EDITAR']==0 && $this->dataUser['LECTURA']==0): ?>
+						<div id="divpErrorLogin" class="alert alert-error" style="display:block;">
+						  <button type="button" class="close" data-dismiss="alert">×</button>
+						  <h4>Error</h4>
+						  <div>Usted no tiene permiso para ver esta información</div>
+						</div>						
+					<?php else:?>	
+					<!-- BEGIN FORM-->
+					<?php if($disabled!='disabled'):?>
+					<form method="POST" action="/admin/users/getinfo" id="FormData" class="form-horizontal ">
+					<?php endif;?>	
+		                <input type="hidden" id="optReg" name="optReg" value="<?php echo ($this->idToUpdate>0) ? 'update': 'new';?>" />
+		                <input type="hidden" name="catId" value="<?php echo $this->catId; ?>" />
+		                
+		                <?php if($this->resultOp=='okRegister'): ?>
+		                    <div class="alert alert-success">
+		                        <button class="close" data-dismiss="alert"></button>
+		                        Datos se almacenaron correctamente.
+		                    </div>                
+		                <?php endif; ?>	
+
+		                <?php if(count(@$this->errors)>0):?>
+		                    <?php if(@$this->errors['eUsuario']==1):?>
+								<div class="alert alert-error" style="display:block;">
+									<button type="button" class="close" data-dismiss="alert">×</button>
+									<b>¡Atención Error!</b>
+									<div>El usuario ya se encuentra registrado, favor de verificarlo.</div>
+								</div>		                    							                    
+		                    <?php elseif(@$this->errors['status']==1):?>
+								<div class="alert alert-error" style="display:block;">
+									<button type="button" class="close" data-dismiss="alert">×</button>
+									<b>¡Atención Error!</b>
+									<div>Ocurrio un error en el registro, favor de intentarlo mas tarde.</div>
+								</div>
+		                    <?php endif;?>    
+		                <?php endif; ?>  
+
+		                	<fieldset>
+								<div class="span12">
+		                			<div class="span6">
+										<div class="control-group">
+											<label class="control-label">Nombre<span class="required">*</span></label>
+											<div class="controls">
+												<input name="inputName" autocomplete="off" type="text" class="m-wrap span12 upperClass" value="<?php echo @$this->data['NOMBRE']; ?>" <?php echo $disabled;?> >
+											</div>
+										</div>		                				
+		                			</div>
+		                			<div class="span6">
+										<div class="control-group">
+											<label class="control-label">Apellidos<span class="required">*</span></label>
+											<div class="controls">
+												<input name="inputApps" autocomplete="off" type="text" class="m-wrap span12 upperClass" value="<?php echo @$this->data['APELLIDOS']; ?>" <?php echo $disabled;?> >
+											</div>
+										</div>		                				
+		                			</div>	                			
+		                		</div>
+								<div class="span12 no-margin-left">
+		                			<div class="span6">
+										<div class="control-group">
+											<label class="control-label">Usuario<span class="required">*</span></label>
+											<div class="controls">
+												<input name="inputUser" autocomplete="off" type="text" class="m-wrap span12" value="<?php echo @$this->data['EMAIL']; ?>" <?php echo $disabled;?> >
+											</div>
+										</div>		                				
+		                			</div>
+		                			<div class="span6">
+										<div class="control-group">
+											<label class="control-label">Contraseña<span class="required">*</span></label>
+											<div class="controls">
+												<input id="inputPassword" name="inputPassword" autocomplete="off" type="password" class="m-wrap span12" value="<?php echo @$this->data['']; ?>" <?php echo $disabled;?> >
+											</div>
+										</div>		                				
+		                			</div>	                			
+		                		</div>
+								<div class="span12 no-margin-left">
+		                			<div class="span6">
+										<div class="control-group">
+											<label class="control-label">Perfil<span class="required">*</span></label>
+											<div class="controls">
+												<select class="span6 m-wrap"  autocomplete="off" name="inputPerfil" <?php echo $disabled;?> >
+													<?php echo $this->aPerfiles; ?>
+												</select>
+											</div>
+										</div>		                				
+		                			</div>
+		                			<div class="span6">
+										<div class="control-group">
+											<label class="control-label">Confirmar Contraseña<span class="required">*</span></label>
+											<div class="controls">
+												<input id="inputPasswordC" name="inputPasswordC" autocomplete="off" type="password" class="m-wrap span12" value="<?php echo @$this->data['']; ?>" <?php echo $disabled;?> >
+											</div>
+										</div>		                				
+		                			</div>	                			
+		                		</div>                		
+		                		
+		                		<div class="span12 no-margin-left">
+		                			<div class="span6">
+										<div class="control-group">
+											<label class="control-label">Estatus<span class="required">*</span></label>
+											<div class="controls">
+												<select class="span6 m-wrap"  autocomplete="off" name="inputStatus" <?php echo $disabled;?> >
+													<?php echo $this->status; ?>
+												</select>
+											</div>
+										</div>	                				
+		                			</div>			                			
+		                		</div>
+								<div class="control-group">
+
+								</div>
+								<?php if($disabled!='disabled'):?>
+								<div class="form-actions">
+									<button type="submit" class="btn btn-primary">Guardar</button>
+									<button type="button" class="btn" onClick="javascript:backToMain()">Cancelar</button>
+								</div>
+								<?php endif;?>
+						</fieldset>
+					<?php if($disabled!='disabled'):?>
+					</form>
+					<?php endif;?>
+					<!-- END FORM-->																
+					<?php endif;?>
+				</div>
+		    </div>
+		</div>
+	</div>
+</div>  

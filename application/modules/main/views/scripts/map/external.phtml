@@ -1,0 +1,48 @@
+<script>
+function copyPassword(cboOption){
+	$("#txtPassword").html("");
+	if(cboOption==1){
+		var secret = $("#secretpass").val();
+		$("#txtPassword").html(secret);
+		$("#aClosepass").show('fast');
+		$("#aShowpass").hide('fast');
+	}else{
+		$("#txtPassword").html("*****");
+		$("#aShowpass").show('fast');
+		$("#aClosepass").hide('fast');		
+	}
+}
+</script>
+<div class="row-span panel-data">
+	<input type="hidden" id="secretpass" value="<?php echo $this->aDataUnidad['PASSWORD'];?>"/>
+	<div class="span12">
+		<table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered"  id="tableRecorrido">
+			<thead>
+				<tr>
+					<td class="span2 text-center"><b># Viaje</b></td>
+					<td class="span2 text-center"><b>Placas</b></td>
+					<td class="span3"><b>IP</b></td>
+					<td class="span3"><b>IMEI</b></td>
+					<td class="span2"><b>URL</b></td>
+					<td class="span2 text-center"><b>Usuario</b></td>
+					<td class="span2 text-center"><b>Contraseña</b></td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><?php echo $this->aDataViaje['CLAVE'];?></td>
+					<td class="text-center"><?php echo $this->aDataUnidad['PLACAS'];?></td>
+					<td><?php echo $this->aDataUnidad['IDENTIFICADOR'];?></td>
+					<td><?php echo $this->aDataUnidad['IDENTIFICADOR_2'];?></td>
+					<td><?php echo $this->aDataUnidad['URL'];?></td>
+					<td class="text-center"><?php echo $this->aDataUnidad['USUARIO'];?></td>
+					<td class="text-center"> <span id="txtPassword"><?php echo "*****";?></span> <br/><a id="aShowpass" href="javascript:copyPassword(1)">Mostrar Contraseña</a>
+						<a id="aClosepass" style="display:none;" href="javascript:copyPassword(0)">Ocultar Contraseña</a></td>
+				</tr>				
+			</tbody>
+		</table>
+	</div>
+	<div class="span12">
+		<iframe class="hmodal600" src="http://<?php echo $this->aDataUnidad['URL'];?>" style="zoom:0" frameborder="0"></iframe>
+	</div>	
+</div>	

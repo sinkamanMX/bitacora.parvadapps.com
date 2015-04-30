@@ -1,0 +1,61 @@
+        <div class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container-fluid">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> <span class="icon-bar"></span>
+                     <span class="icon-bar"></span>
+                     <span class="icon-bar"></span>
+                    </a>
+                    <a class="brand" href="/main/main/inicio">
+                        <?php echo $this->dataUser['N_EMPRESA']; ?>
+                        <!--<img class="img" src="/images/clients/deacero.png">-->
+                    </a>                 
+                    <div class="nav-collapse collapse">
+                        <ul class="nav pull-right">
+                            <li class="dropdown">
+                                <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown"> 
+                                    <i class="icon-user"></i> <?php echo @$this->dataUser['USUARIO'];?><i class="caret"></i>
+                                    <!--<br>
+                                    Perfil: <b>super_admin</b>
+                                    <br>
+                                    Empresa: <b>De Acero</b>-->
+                                </a>
+                                <ul class="dropdown-menu">                                    
+                                    <li>
+                                        <a tabindex="-1" href="javascript:recoverypass()">Cambiar Contraseña</a>
+                                    </li>
+                                    <li class="divider"></li>
+                                    <li>
+                                        <a tabindex="-1" href="/main/main/logout">Salir</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                        <ul class="nav pull-right">
+                            <li>
+                                <div id="spanTravelsPen" style="display:none; margin-top: 5%">
+                                    <a onClick="showTravelPen();" role="button" class="cursor-hand"> 
+                                        <span class="badge badge-warning">
+                                            <img src="/images/assets/warning.gif" style="height: 15px;">
+                                            <span id="lblTravelsPen"></span> Viajes Sin Atender</span>
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>                        
+
+                        <ul class="nav">
+                            <?php $controlMenu = -1; ?>
+                            <?php foreach($this->modules as $key => $items): ?> 
+                                <?php if($controlMenu!=$items['IDMENU']): ?>
+                                    <?php $controlMenu=$items['IDMENU']; ?>
+                                    <li class="<?php echo ($items['IDMENU']==$this->moduleInfo["ID_MENU"]) ? 'active': '' ;?>">
+                                        <a href="<?php echo $items['SCRIPT'];?>"><?php echo $items['N_DESCRIPCION'];?></a>
+                                    </li>                                    
+                                <?php endif;?>
+                            <?php endforeach;?>
+                        </ul>
+                    </div>
+                    <!--/.nav-collapse -->
+                </div>
+            </div>
+        </div>

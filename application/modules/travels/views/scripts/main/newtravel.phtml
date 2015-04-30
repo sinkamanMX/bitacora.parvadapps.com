@@ -1,0 +1,189 @@
+<?php $this->headScript()->appendFile('/js/modules/travels/newTravel.js') ?> 
+<div class="row panel-data">
+    <input id="hRefLinkMain" type="hidden" value="/travels/main/index" />
+	<div class="span12">
+		<!-- block -->
+        <div class="block">
+            <div class="navbar navbar-inner block-header">
+                <div class="muted pull-left">
+					<a href="javascript:history.back();">
+						<i class="icon-circle-arrow-left fa-1"></i></a> Nuevo Viaje	
+				</div>
+            </div>
+            <div class="block-content collapse in">
+                <div class="span12">
+            		<?php if(isset($this->error['unit-use'])):?>
+						<div id="divpErrorLogin" class="alert alert-error" style="display:block;">
+						  <button type="button" class="close" data-dismiss="alert">×</button>
+						  <h4>Error</h4>
+						  <div>La unidad seleccionada ya tiene un viaje asignado en las fechas ingresadas.</div>
+						</div>	
+            		<?php endif;?>
+					<form method="POST" action="/travels/main/newtravel" id="FormData" class="form-horizontal ">
+		                <input type="hidden" name="optReg" value="registerTravel" />
+						<fieldset>
+							<div class="">
+								<div class="span6">
+									<div class="control-group">
+										<label class="control-label">Inicio<span class="required">*</span></label>
+										<div class="controls">
+					                          <input id="inputFechaIn" name="inputFechaIn" data-required="1"  type="text" class="form-control" value="<?php echo @$this->data['inputFechaIn']; ?>" id="inputDate"  >
+										</div>
+									</div>				
+								</div>
+								<div class="span6">
+									<div class="control-group">
+										<label class="control-label">Fin<span class="required">*</span></label>
+										<div class="controls">
+											<input type="text" id="inputFechaFin" name="inputFechaFin" class="m-wrap" value="<?php echo (@$this->data['inputFechaFin']); ?>" >
+										</div>
+									</div>							
+								</div>						
+							</div>
+
+							<div class="">
+								<div class="span6">
+									<div class="control-group">
+										<label class="control-label">Ruta<span class="required">*</span></label>
+										<div class="controls">
+											<select class=" m-wrap" id="inputRuta" name="inputRuta" >
+												<option value="">Seleccionar una opción</option>
+												<?php echo @$this->aRutas;?>
+											</select>
+										</div>
+									</div>				
+								</div>
+								<div class="span6">
+									<div class="control-group">
+										<label class="control-label">Tipo Viaje<span class="required">*</span></label>
+										<div class="controls">
+											<select class=" m-wrap" id="inputTviaje" name="inputTviaje" >
+												<option value="">Seleccionar una opción</option>
+												<?php echo @$this->aTipoViaje;?>
+											</select>
+										</div>
+									</div>							
+								</div>						
+							</div>					
+
+							<div class="">
+								<div class="span6">
+									<div class="control-group">
+										<label class="control-label">Número<span class="required">*</span></label>
+										<div class="controls">
+											<input type="text" name="inputNoTravel" data-required="1" class=" m-wrap" value="<?php echo (@$this->data['inputNoTravel']); ?>" >
+										</div>
+									</div>
+								</div>
+								<div class="span6">
+									<div class="control-group">
+										<label class="control-label">Descripción<span class="required">*</span></label>
+										<div class="controls">
+											<input type="text" name="inputDescripcion" data-required="1" class=" m-wrap" value="<?php echo (@$this->data['inputDescripcion']); ?>" >
+										</div>
+									</div>							
+								</div>
+							</div>
+
+							<div class="">
+								<div class="span6">
+									<div class="control-group">
+										<label class="control-label">Sucursal<span class="required">*</span></label>
+										<div class="controls">
+											<select class=" m-wrap" id="inputSucursal" name="inputSucursal" onChange="getoptionsCbo('Cliente','clients',this.value,false);" >
+												<option value="">Seleccionar una opción</option>
+						                        <?php foreach ($this->sucursales as $key => $item): ?>
+						                            <option <?php echo ($item['ID_SUCURSAL'] == @$this->data['inputSucursal']) ? 'selected':'';?> value="<?php echo $item['ID_SUCURSAL']?>"><?php echo $item['DESCRIPCION']?></option>
+						                        <?php endforeach; ?>
+											</select>									
+										</div>
+									</div>				
+								</div>	
+
+								<div class="span6">
+									<div class="control-group">
+										<label class="control-label">Cliente<span class="required">*</span></label>
+										<div class="controls">
+											<div id="divCliente">
+												<select class=" m-wrap" id="inputCliente" name="inputCliente">
+													<option value="">Seleccionar una opción</option>
+													<?php echo @$this->clientes;?>
+												</select>
+											</div>
+										</div>
+									</div>					
+								</div>						
+							</div>					
+
+
+							<div class="">
+								<div class="span6">
+									<div class="control-group">
+										<label class="control-label">Transportistas<span class="required">*</span></label>
+										<div class="controls">
+											<select class=" m-wrap" name="inputTransportista"  id="inputTransportista"  onChange="getoptionsCbo('Operadores','operators',this.value,false);getoptionsCbo('Unidades','units',this.value,false);">
+												<option value="">Seleccionar una opción</option>
+						                        <?php foreach ($this->transportistas as $key => $item): ?>
+						                            <option <?php echo ($item['ID_TRANSPORTISTA'] == @$this->idTransportista) ? 'selected':'';?> value="<?php echo $item['ID_TRANSPORTISTA']?>"><?php echo $item['DESCRIPCION']?></option>
+						                        <?php endforeach; ?>
+											</select>
+										</div>
+									</div>	
+								</div>
+								<div class="span6">
+									<div class="control-group">
+										<label class="control-label">Unidad<span class="required">*</span></label>
+										<div class="controls">
+											<div id="divUnidades">
+												<select class=" m-wrap" name="inputUnidades" id="inputUnidades" >
+													<option value="">Seleccionar una opción</option>
+							                        <?php foreach ($this->unidades as $key => $item): ?>
+							                            <option <?php echo ($item['ID'] == @$this->data['inputUnidades']) ? 'selected':'';?> value="<?php echo $item['ID']?>"><?php echo $item['NAME']?></option>
+							                        <?php endforeach; ?>
+												</select>
+											</div>
+										</div>
+									</div>						
+								</div>	
+							</div>
+
+							<div class="">		
+								<div class="span6">
+									<div class="control-group">
+									<label class="control-label">Operador<span class="required">*</span></label>
+									<div class="controls">
+										<div id="divOperadores">
+											<select class=" m-wrap"  name="inputOperadores" id="inputOperadores" >
+												<option value="">Seleccionar una opción</option>
+						                        <?php foreach ($this->operadores as $key => $item): ?>
+						                            <option <?php echo ($item['ID'] == @$this->data['inputOperadores']) ? 'selected':'';?> value="<?php echo $item['ID']?>"><?php echo $item['NAME']?></option>
+						                        <?php endforeach; ?>
+											</select>
+										</div>
+									</div>
+									</div>			
+								</div>	
+								<div class="span6">
+									<div class="control-group">
+										<label class="control-label">Medio Contacto<span class="required">*</span></label>
+										<div class="controls">
+											<input type="text" name="inputMedioContacto" data-required="1" class=" m-wrap" value="<?php echo (@$this->data['MEDIO_CONTACTO']); ?>" placeholder="Ej: tel:123456789">
+										</div>
+									</div>						
+								</div>												
+							</div>						
+
+							<div class="">
+						    	<div class="col-xs-4 col-md-5">
+									<div class="pull-right">			
+										<button type="submit" class="btn btn-default bg-btn-send">Siguiente</button>
+									</div>    
+						    	</div>						
+							</div>
+						</fieldset>
+					</form>
+				</div>
+		    </div>
+		</div>
+	</div>
+</div>     

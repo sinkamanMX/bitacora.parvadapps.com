@@ -1,0 +1,116 @@
+@charset "UTF-8";
+* { 
+	margin: 0;
+}
+html {
+	overflow-y:hidden!important;
+}
+body {
+	overflow-y:hidden!important;
+}
+.process {
+	min-height:900px;
+	background-image:url(../image/gtp_bg.jpg);
+	background-repeat:no-repeat;
+	background-position:center center;
+	background-attachment:fixed;
+	-webkit-background-size:cover;
+	-moz-background-size:cover;
+	background-size:cover;
+}
+#wrapper {
+	position:absolute;
+	width:250px;
+	height:200px;
+	top:100%;
+	margin-top:-250px;
+	margin-left:30px;
+	font-family: 'LetteraText-Bold', Helvetica, "Helvetica Neue", Arial, "Lucida Grande", sans-serif;
+}
+#uda {
+	width:150px;
+	height:50px;
+	position:fixed;
+	top:0;
+	margin-top:30px;
+	left:100%;
+	margin-left:-150px;
+}
+#header {
+	width:200px;
+	margin-top:5px;
+	text-align:left;
+}
+#information {
+	width:200px;
+	margin-top:10px;
+	margin-left:0px;
+}
+#login {
+	width:210px;
+	position:absolute;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px;
+	letter-spacing:0.5px;
+	color:#fff;
+}
+#users {
+	width:210px;
+	height:20px;
+}
+#pass {
+	width:210px;
+	height:20px;
+	margin-top:10px;
+}
+#registro {
+	width:93px;
+	height:26px;
+	position:absolute;
+	top: 205px;
+	left: 20px;
+}
+#entrar {
+	width:68px;
+	height:26px;
+	position:absolute;
+	left: 119px;
+	top: 205px;
+}
+.registrar {
+	background-image:url(../image/btn_reg_bg.png);
+	cursor:pointer;
+}
+.registrar_hover {
+	background-image:url(../image/btn_reg_up.png);
+	cursor:pointer;
+}
+.aceptar {
+	background-image:url(../image/btn_ing_bg.png);
+	cursor:pointer;
+}
+.aceptar_hover {
+	background-image:url(../image/btn_ing_up.png);
+	cursor:pointer;
+}
+#footer {
+	width:210px;
+	height:50px;
+	position:absolute;
+	top:100%;
+	margin-top:-50px;
+	left:100%;
+	margin-left:-230px;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:9px;
+	text-align:center;
+	letter-spacing:0.5px;
+	color:#f2f2f2;
+}
+
+.recoverpass{
+	color: #FFFFFF;
+	right: -30%;
+	position: relative;
+	text-decoration: none;
+}

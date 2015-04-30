@@ -1,0 +1,240 @@
+<?php $this->headScript()->appendFile('/js/modules/register/validateRegister.js') ?> 
+
+<div class="block-content">
+    <div class="row-fluid">
+        <!-- block -->
+        <div class="block">
+            <div class="navbar navbar-inner block-header">
+                <div class="muted pull-left">Registro Nuevo</div>
+            </div>
+            <div class="block-content collapse in">
+                <div class="span12">
+	                <?php if(count(@$this->errors)>0):?>
+	                    <?php if(@$this->errors['eEmpresa']==1):?>
+							<div class="alert alert-error" style="display:block;">
+								<button type="button" class="close" data-dismiss="alert">×</button>
+								<b>¡Atención Error!</b>
+								<div>La empresa ya se encuentra registrada, pongase en contacto con su administrador para crear su cuenta.</div>
+							</div>		
+	                    <?php elseif(@$this->errors['eUsuario']==1):?>
+							<div class="alert alert-error" style="display:block;">
+								<button type="button" class="close" data-dismiss="alert">×</button>
+								<b>¡Atención Error!</b>
+								<div>El usuario ya se encuentra registrado, favor de verificarlo.</div>
+							</div>		                    							                    
+	                    <?php elseif(@$this->errors['status']==1):?>
+							<div class="alert alert-error" style="display:block;">
+								<button type="button" class="close" data-dismiss="alert">×</button>
+								<b>¡Atención Error!</b>
+								<div>Ocurrio un error en el registro, favor de intentarlo mas tarde.</div>
+							</div>
+	                    <?php endif;?>    
+	                <?php endif; ?>          	
+
+	                <?php if(@$this->resultOp=='okRegister'):?>
+	                    <div class="alert alert-success alert-dismissable" style="display:block;">
+	                        <i class="fa fa-check"></i>
+	                        <!--<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>-->
+	                        <b>¡Atención!</b> Sus datos se han registrado correctamente.<br/>
+	                        Se ha enviado un correo electrónico, favor de verificar su bandeja de entrada.<br/>
+            				Tambien es recomendable verificar en la carpeta de Spam (Correo no deseado).
+
+							<a href="/">
+								<i class="icon-circle-arrow-left fa-1"></i><b>Regresar</b>
+							</a>
+	                    </div>  
+	                <?php else:?>
+						<form method="POST" action="/register/main/index" id="FormData" class="form-horizontal ">
+			                <input type="hidden" name="optReg" value="register" />
+				                <fieldset>
+				                	<div class="span12">
+				                		<h4>Datos de la Empresa</h4>
+				                	</div>
+				                	<div class="span12 no-margin-left">
+				                		<div class="span4">
+											<div class="control-group">
+												<label class="control-label">Nombre<span class="required">*</span></label>
+												<div class="controls">
+													<input type="text" name="inputDescripcion" autocomplete="off" class="span12 m-wrap upperClass" value="<?php echo @$this->data['DESCRIPCION']; ?>" >
+												</div>
+											</div>	
+				                		</div>
+
+				                		<div class="span4">
+											<div class="control-group">
+												<label class="control-label">Razón Social<span class="required">*</span></label>
+												<div class="controls">
+													<input type="text" name="inputRazonSocial" autocomplete="off" class="span12 m-wrap upperClass" value="<?php echo @$this->data['RAZON_SOCIAL']; ?>" >
+												</div>
+											</div>			                			
+				                		</div>
+
+				                		<div class="span4">
+											<div class="control-group">
+												<label class="control-label">RFC<span class="required">*</span></label>
+												<div class="controls">
+												  <input name="inputRFC" type="text" autocomplete="off" class="span12 m-wrap upperClass" value="<?php echo @$this->data['inputRFC']; ?>" >
+												</div>
+											</div>
+				                		</div>			                		
+				                	</div>
+				                	<div class="span12 no-margin-left">
+				                		<div class="span12">
+											<div class="control-group">
+												<label class="control-label">Dirección<span class="required">*</span></label>
+												<div class="controls">
+													<input name="inputDireccion" type="text" autocomplete="off" class="span12 m-wrap upperClass" value="<?php echo @$this->data['DIRECCION']; ?>" >
+												</div>
+											</div>
+				                		</div>
+				                	</div>
+
+				                	<div class="span12 no-margin-left">
+				                		<div class="span4">
+											<div class="control-group">
+												<label class="control-label">Tel. Fijo:<span class="required">*</span></label>
+												<div class="controls">
+												  <input name="inputTelFijo" type="text" autocomplete="off" class="span12 m-wrap" value="<?php echo @$this->data['TEL_FIJO']; ?>">
+												</div>
+											</div>	
+				                		</div>
+				                		<div class="span4">
+											<div class="control-group">
+												<label class="control-label">Tel. Móvil:<span class="required"></span></label>
+												<div class="controls">
+												  <input name="inputTelMovil" type="text" autocomplete="off" class="span12 m-wrap" value="<?php echo @$this->data['TEL_MOVIL']; ?>">
+												</div>
+											</div>
+				                		</div>
+				                		<div class="span4">
+											<div class="control-group">
+												<label class="control-label">Radio:<span class="required"></span></label>
+												<div class="controls">
+												  <input name="inputRadio" type="text" autocomplete="off" class="span12 m-wrap" value="<?php echo @$this->data['RADIO']; ?>">
+												</div>
+											</div>			                			
+				                		</div>			                		
+				                	</div>
+  
+				                	<div class="span12 no-margin-left">
+										<h4>Datos del Usuario</h4>
+									</div>
+				                	<div class="span12 no-margin-left">
+				                		<div class="span4">
+											<div class="control-group">
+												<label class="control-label">Nombre<span class="required">*</span></label>
+												<div class="controls">
+													<input type="text" name="inputName" autocomplete="off" class="span12 m-wrap upperClass" value="<?php echo @$this->data['inputName']; ?>" >
+												</div>
+											</div>	
+				                		</div>
+				                		<div class="span4">
+											<div class="control-group">
+												<label class="control-label">Apellidos<span class="required">*</span></label>
+												<div class="controls">
+													<input type="text" name="inputApps" autocomplete="off" class="span12 m-wrap upperClass" value="<?php echo @$this->data['inputApps']; ?>" >
+												</div>
+											</div>					                			
+				                		</div>
+				                		<div class="span4">
+				                			
+				                		</div>
+				                	</div>	
+
+				                	<div class="span12 no-margin-left">
+				                		<div class="span4">
+											<div class="control-group">
+												<label class="control-label">Usuario (E-mail)<span class="required">*</span></label>
+												<div class="controls">
+													<input type="text" name="inputUser" autocomplete="off" class="span12 m-wrap" value="<?php echo @$this->data['inputUser']; ?>" >
+												</div>
+											</div>				                			
+				                		</div>
+				                		<div class="span4">
+											<div class="control-group">
+												<label class="control-label">Contraseña<span class="required">*</span></label>
+												<div class="controls">
+													<input type="password" name="inputPassword" autocomplete="off" id="inputPassword" class="span12 m-wrap" value="<?php echo @$this->data['inputPassword']; ?>" >
+												</div>
+											</div>					                			
+				                		</div>
+				                		<div class="span4">
+											<div class="control-group">
+												<label class="control-label">Confirmar Contraseña<span class="required">*</span></label>
+												<div class="controls">
+													<input type="password" name="inputPasswordSec" autocomplete="off" autocomplete="off" id="inputPasswordSec"  class="span12 m-wrap" value="<?php echo @$this->data['inputPasswordSec']; ?>" >
+												</div>
+											</div>					                			
+				                		</div>
+				                	</div>					                	
+
+				                	<div class="span12 no-margin-left">
+				                		<div class="span4">
+											<div class="control-group">
+												<label class="control-label">Tel. Fijo:<span class="required">*</span></label>
+												<div class="controls">
+												  <input name="inputTelFijoUser" type="text" autocomplete="off" class="span12 m-wrap" value="<?php echo @$this->data['inputTelFijoUser']; ?>">
+												</div>
+											</div>
+				                		</div>
+				                		<div class="span4">
+											<div class="control-group">
+												<label class="control-label">Tel. Móvil:<span class="required"></span></label>
+												<div class="controls">
+												  <input name="inputTelMovilUser" type="text" autocomplete="off" class="span12 m-wrap" value="<?php echo @$this->data['inputTelMovilUser']; ?>">
+												</div>
+											</div>
+				                		</div>
+				                		<div class="span4">
+													                			
+				                		</div>			                		
+				                	</div>
+
+				                	<div class="span12 no-margin-left">
+				                		<div class="span4">
+											<div class="control-group">
+												<label class="control-label">Cliente Ovision:<span class="required">*</span></label>
+												<div class="controls">												
+													<select class="span6 m-wrap"  autocomplete="off" name="inputClienteUDA" onChange="requiredData(this.value)">
+														<?php echo $this->bUsuarioUda; ?>
+													</select>
+												</div>
+											</div>
+				                		</div>
+					                		<div class="span4">
+												<div class="control-group divUserUda">
+													<label class="control-label">Usuario Ovision:<span class="required"></span></label>
+													<div class="controls">
+													  <input id="inputUserUda" name="inputUserUda" type="text" autocomplete="off" class="span12 m-wrap" value="<?php echo @$this->data['inputUserUda']; ?>">
+													</div>
+												</div>
+					                		</div>
+					                		<div class="span4">
+												<div class="control-group divUserUda">
+													<label class="control-label">Contraseña Ovision:<span class="required"></span></label>
+													<div class="controls">
+													  <input id="inputPasswordUda" name="inputPasswordUda" type="text" autocomplete="off" class="span12 m-wrap" value="<?php echo @$this->data['inputPasswordUda']; ?>">
+													</div>
+												</div>													                			
+					                		</div>			                		
+				                	</div>				                	
+
+
+									<div class="control-group">
+									</div>
+
+									<div class="form-actions text-right">
+										<a href="javascript:history.back();">
+											<button type="button" class="btn">Cancelar</button>
+										</a>
+										<button type="submit" class="btn btn-primary">Enviar</button>
+									</div>
+							</fieldset>
+						</form>
+	                <?php endif;?> 
+                </div>
+            </div>
+        </div>
+        <!-- /block -->
+    </div>
+</div>

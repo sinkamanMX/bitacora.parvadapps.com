@@ -1,0 +1,71 @@
+<?php $this->headScript()->appendFile('/js/modules/gralTables.js') ?>   
+<?php $this->headScript()->appendFile('/js/modules/routes/validateRoutes.js') ?>   
+    <div class="row panel-data">
+        <input id="hRefLinkEdit" type="hidden" value="/admin/routes/getinfo?idRow=" />
+		<div class="span12">
+			<!-- block -->
+            <div class="block">
+                <div class="navbar navbar-inner block-header">
+                    <div class="muted pull-left">Rutas</div>
+                </div>
+                <div class="block-content collapse in">
+                    <div class="span12">
+                        <?php if($this->dataUser['INSERTAR']==1): ?>
+                            <div class="table-toolbar">
+                              <div class="btn-group">
+                                 <a href="/admin/routes/getinfo?catId=-1"><button class="btn btn-success"> Agregar <i class="icon-plus icon-white"></i></button></a>
+                              </div>
+                            </div>  
+                        <?php endif;?>                          
+                        <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="dataTable">
+                            <thead>
+                                <tr>
+                                    <th>Descripción</th>
+                                    <th>Origen</th>
+                                    <th>Destino</th>
+                                    <th>Duración</th>
+                                    <th>Estatus</th>
+                                    <th>Opciones</th>                                    
+                                </tr>
+                            </thead>
+                            <tbody>                                
+                                <?php foreach($this->datatTable as $key => $items): ?>  
+                                <tr class="odd gradeX">
+                                    <td><?php echo $items['DESCRIPCION']; ?></td>
+                                    <td><?php echo $items['DESCRIPCION_ORIGEN']; ?></td>
+                                    <td><?php echo $items['DESCRIPCION_DESTINO']; ?></td>
+                                    <td><?php echo $items['TIEMPO_ESTIMADO']; ?> hrs.</td>
+                                    <td><?php echo ($items['ESTATUS'])? 'Activo':'Inactivo'; ?></td>
+                                    <td class="text-center">
+                                        <?php if($this->dataUser['LECTURA']==1): ?>
+                                            <a href="/admin/routes/getinfo?catId=<?php echo $items['ID_RUTA']; ?>"><button class="btn btn-primary"> <i class="icon-eye-open icon-white"></i></button></a>   
+                                        <?php endif;?> 
+                                        <?php if($this->dataUser['ELIMINAR']==1): ?>
+                                            <a href="javascript:confirmDelete('<?php echo $items['ID_RUTA']; ?>')"><button class="btn btn-danger"> <i class="icon-trash icon-white"></i></button></a>
+                                        <?php endif;?>
+                                    </td>
+                                </tr>    
+                                <?php endforeach;?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- /block -->
+		</div>
+	</div>   
+
+<div id="modalConfirmDelete" class="modal hide">
+    <div class="modal-header">
+        <button data-dismiss="modal" class="close" type="button">&times;</button>
+        <h3>Atención!</h3>
+    </div>
+    <div class="modal-body">
+        <p>¿Realmente desea eliminar este registro?</p>
+    </div>
+    <div class="modal-footer">
+        <input type="hidden" id="inputDelete" value="-1"/>
+        <a class="btn btn-primary" href="javascript:deleteRow();">Eliminar</a>
+        <a data-dismiss="modal" class="btn" href="#">Cancelar</a>
+    </div>
+</div>    

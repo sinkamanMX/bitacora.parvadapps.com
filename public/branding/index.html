@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Grupo UDA | GPS Trip Polling</title>
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<link type="image/x-icon" href="image/favicon.ico" rel="shortcut icon">
+<script src="script/jquery.js" type="text/javascript"></script>
+<script type="text/javascript">
+	$(function() {
+    	$('.registrar').hover(function() {
+        	jQuery('.registrar').addClass("registrar_hover");
+        },
+        function() {
+        	jQuery('.registrar').removeClass("registrar_hover");
+        });
+    });
+	$(function() {
+    	$('.aceptar').hover(function() {
+        	jQuery('.aceptar').addClass("aceptar_hover");
+        },
+        function() {
+        	jQuery('.aceptar').removeClass("aceptar_hover");
+        });
+    });
+</script>
+</head>
+<body>
+<div id="section_back" class="process"></div>
+<div id="uda"><img src="image/logo_uda.png" width="100"/></div>
+<div id="wrapper">
+	<div id="header">
+    	<img src="image/gtp.png" width="60"/><br />
+    	<img src="image/title.png" width="185"/>
+    </div>
+    <div id="information">
+    <form action="valida.php" method="post">
+        	<div id="login">
+            	<div id="users"> 
+                	<input name="user" type="text" value="USUARIO" onclick="this.value='';" onblur="this.value=(this.value=='')?'USUARIO':this.value;" class="imputbox" style="width:180px; height:20px; border:0; color:#666666; padding-left:5px; letter-spacing:0.5px; font-size:10px;">
+                </div>
+                <div id="pass">    
+                	<input name="pass" type="password" value="PASSWORD" onclick="this.value='';" onblur="this.value=(this.value=='')?'PASSWORD':this.value;" style="width:180px; height:20px; border:0; color:#666666; padding-left:5px; letter-spacing:0.5px; font-size:10px;">
+                </div>
+                <br />
+      		</div>
+            <div id="registro" class="registrar"></div>
+      		<div id="entrar" class="aceptar"></div>
+		</form>
+    </div>
+</div>
+<div id="footer">
+	Copyright © 2015 GPS Trip Polling. D.R.<br />
+    By Grupo UDA
+</div>
+</body>
+</html>

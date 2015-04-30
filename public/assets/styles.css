@@ -1,0 +1,442 @@
+/** Home Page **/
+body {
+
+}
+
+
+@media (min-width: 979px){
+  .body-all {
+    padding-top: 35px;
+    padding-bottom: 40px;
+    background-color: #f5f5f5;          
+  }
+}
+
+
+/** Login Page **/
+#login {
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+.login-form{
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+#login .form-signin {
+    max-width: 300px;
+    padding: 19px 29px 29px;
+    margin: 0 auto 20px;
+    background-color: #fff;
+    border: 1px solid #e5e5e5;
+    -webkit-border-radius: 5px;
+       -moz-border-radius: 5px;
+            border-radius: 5px;
+    -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+       -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+            box-shadow: 0 1px 2px rgba(0,0,0,.05);
+}
+#login .form-signin .form-signin-heading,
+#login .form-signin .checkbox {
+    margin-bottom: 10px;
+}
+#login .form-signin input[type="text"],
+#login .form-signin input[type="password"] {
+    font-size: 16px;
+    height: auto;
+    margin-bottom: 15px;
+    padding: 7px 9px;
+}
+
+/** 2 level sub menu **/
+.dropdown-menu-with-subs .sub-menu {
+  left: 100%;
+  position: absolute;
+  top: 0;
+  visibility: hidden;
+  margin-top: -1px;
+}
+
+.dropdown-menu-with-subs li:hover .sub-menu {
+  visibility: visible;
+  display: block;
+}
+
+.navbar .sub-menu:before {
+  border-bottom: 7px solid transparent;
+  border-left: none;
+  border-right: 7px solid rgba(0, 0, 0, 0.2);
+  border-top: 7px solid transparent;
+  left: -7px;
+  top: 10px;
+}
+.navbar .sub-menu:after {
+  border-top: 6px solid transparent;
+  border-left: none;
+  border-right: 6px solid #fff;
+  border-bottom: 6px solid transparent;
+  left: 10px;
+  top: 11px;
+  left: -6px;
+}
+
+/** Global **/
+#content {
+  margin-left:0px;
+}
+.hide-sidebar, .show-sidebar {
+  cursor: pointer;
+}
+.padd-bottom {
+  margin-bottom: 5px;
+}
+.breadcrumb {
+	margin: 0 0 0px;
+	padding: 10px 0px;
+	background-color: transparent;
+}
+
+.block {
+	border: 1px solid #ccc;
+	background: white;
+	margin: 1em 0em;
+	border-top: none;
+}
+
+.block-content {
+	margin: 1em;
+	min-height: .25em;
+}
+
+.block-header {
+	margin-bottom: 0px;
+	border-right: none;
+	border-left: none;
+	-webkit-border-radius: 0px;
+	-moz-border-radius: 0px;
+	border-radius: 0px;
+}
+.block-header div {
+	padding-top: 10px;
+}
+
+.easyPieChart {
+	margin: 0px auto;
+}
+
+.chart-bottom-heading {
+	margin-top: 5px;
+	text-align: center;
+}
+
+/** Side Bar **/
+.bs-docs-sidenav {
+  max-width: 228px;
+  margin: 30px 0 0;
+  padding: 0;
+  background-color: #fff;
+  -webkit-border-radius: 6px;
+     -moz-border-radius: 6px;
+          border-radius: 6px;
+  -webkit-box-shadow: 5px 5px 5px rgba(0,0,0,.065);
+     -moz-box-shadow: 5px 5px 5px rgba(0,0,0,.065);
+          box-shadow: 5px 5px 5px rgba(0,0,0,.065);       
+}
+.bs-docs-sidenav > li > a {
+  display: block;
+  width: 190px \9;
+  margin: 0 0 -1px;
+  padding: 8px 14px;
+  border: 1px solid #e5e5e5;
+}
+.bs-docs-sidenav > li:first-child > a {
+  -webkit-border-radius: 6px 6px 0 0;
+     -moz-border-radius: 6px 6px 0 0;
+          border-radius: 6px 6px 0 0;
+}
+.bs-docs-sidenav > li:last-child > a {
+  -webkit-border-radius: 0 0 6px 6px;
+     -moz-border-radius: 0 0 6px 6px;
+          border-radius: 0 0 6px 6px;
+}
+.bs-docs-sidenav > .active > a {
+  position: relative;
+  z-index: 2;
+  padding: 9px 15px;
+  border: 0;
+  text-shadow: 0 1px 0 rgba(0,0,0,.15);
+  -webkit-box-shadow: inset 1px 0 0 rgba(0,0,0,.1), inset -1px 0 0 rgba(0,0,0,.1);
+     -moz-box-shadow: inset 1px 0 0 rgba(0,0,0,.1), inset -1px 0 0 rgba(0,0,0,.1);
+          box-shadow: inset 1px 0 0 rgba(0,0,0,.1), inset -1px 0 0 rgba(0,0,0,.1);
+}
+/* Chevrons */
+.bs-docs-sidenav .icon-chevron-right {
+  float: right;
+  margin-top: 2px;
+  margin-right: -6px;
+  opacity: .25;
+}
+.bs-docs-sidenav > li > a:hover {
+  background-color: #f5f5f5;
+}
+.bs-docs-sidenav a:hover .icon-chevron-right {
+  opacity: .5;
+}
+.bs-docs-sidenav .active .icon-chevron-right,
+.bs-docs-sidenav .active a:hover .icon-chevron-right {
+  opacity: 1;
+}
+.bs-docs-sidenav.affix {
+  top: 40px;
+}
+.bs-docs-sidenav.affix-bottom {
+  position: absolute;
+  top: auto;
+  bottom: 270px;
+}
+
+/* Icons
+------------------------- */
+.the-icons {
+  margin-left: 0;
+  list-style: none;
+}
+.the-icons li {
+  float: left;
+  width: 25%;
+  line-height: 25px;
+}
+.the-icons i:hover {
+  background-color: rgba(255,0,0,.25);
+}
+
+
+.control-label .required {
+  color: #e02222;
+  font-size: 12px;
+  padding-left: 2px;
+}
+.m-top-3{
+  margin-top: 3%;
+}
+.m-top-10{
+  margin-top: 10%;
+}
+.m-top-20{
+  margin-top: 20%;
+}
+.m-top-30{
+  margin-top: 30%;
+}
+
+.margin-30{
+  margin: 30px 0 0;
+}
+.gmnoprint img {
+    max-width: none !important; 
+}
+
+.hmodal280 {
+  height: 280px;
+  width: 99.9%;
+}
+/*This will work for firefox*/
+@-moz-document url-prefix() {
+    .hmodal280{
+    height: 280px;
+    width: 99.9%;
+  }
+}
+
+.hmodal500 {
+  height: 500px;
+  width: 99.9%;
+}
+/*This will work for firefox*/
+@-moz-document url-prefix() {
+    .hmodal500{
+    height: 500px;
+    width: 99.9%;
+  }
+}
+.hmodal550 {
+  height: 550px;
+  width: 99.9%;
+}
+/*This will work for firefox*/
+@-moz-document url-prefix() {
+    .hmodal550{
+    height: 550px;
+    width: 99.9%;
+  }
+}
+
+.hmodal600 {
+  height: 600px;
+  width: 99.9%;
+}
+@-moz-document url-prefix() {
+    .hmodal600{
+    height: 600px;
+    width: 99.9%;
+  }
+}
+
+.hmodal350 {
+  height: 350px;
+  width: 99.9%;
+}
+/*This will work for firefox*/
+@-moz-document url-prefix() {
+    .hmodal350{
+    height: 350px;
+    width: 99.9%;
+  }
+}
+
+.hmodal400 {
+  height: 400px;
+  width: 99.9%;
+}
+/*This will work for firefox*/
+@-moz-document url-prefix() {
+    .hmodal400{
+    height: 400px;
+    width: 99.9%;
+  }
+}
+
+.bg-white{
+  background-color: #FFFFFF!important;
+}
+
+.no-margin-t{
+  margin-top: 0px;
+}
+
+.no-margin-b{
+  margin-bottom: 0px;
+}
+.no-margin-left{
+  margin-left: 0px !important;
+}
+
+.margin-l15px{
+  margin-left: 15px !important;
+}
+
+.fa-1 {
+  font-size: 1.5em;
+}
+.fa-2 {
+  font-size: 2em;
+}
+.error{
+  color: #b94a48;
+  border-color: #b94a48 !important;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset !important;  
+}
+
+.text-error {
+  color: #b94a48;
+}
+.control-group.error .checkbox, .control-group.error .radio, .control-group.error input, .control-group.error select, .control-group.error textarea {
+    color: #b94a48 !important;
+}
+.control-group.error input, .control-group.error select, .control-group.error textarea {
+    border-color: #b94a48 !important;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset !important;
+}
+
+.row-min-h{
+  min-height: 550px;
+  margin-top: 15px;
+}
+#ex1Slider .slider-selection {
+  background: #BABABA;
+}
+
+#countdown{
+  margin-left: 60%;
+  margin-top: -40%;
+  position: relative;
+}
+.modal-lg {
+  width: 800px;
+  left: 40% !important;
+}
+.form-horizontal .controls {
+  margin-left: 120px !important;
+}
+
+.form-horizontal .control-label {
+  float: left;
+  padding-top: 5px;
+  text-align: right;
+  width: 100px !important;
+}
+.form-horizontal .control-group {
+  margin-bottom: 15px !important;
+}
+.modal.fade.in {
+    top: 5% !important;
+}
+.button-excel{
+    margin-left: 5px;
+    margin-top: 0;
+    position: fixed;
+}
+.button-excel-export{
+    margin-left: 5px;
+    margin-top: 0;
+    position: absolute;
+}
+
+
+.row-min-h30{
+  min-height: 30px;
+}
+.row-min-h{
+  min-height: 550px;
+}
+.row-min-h200{
+  min-height: 200px;
+}
+.row-min-h300{
+  min-height: 300px;
+}
+.row-min-h350{
+  min-height: 350px;
+}
+.row-min-h450{
+  min-height: 450px;
+}
+.row-min-h470{
+  min-height: 470px;
+}
+.row-min-h550{
+  min-height: 550px;
+}
+.row-min-h600{
+  min-height: 600px;
+}
+.row-min-h650{
+  min-height: 650px;
+}
+.row-min-h700{
+  min-height: 700px;
+}
+
+.row-min-h900{
+  min-height: 900px;
+}
+.row-min-h1200{
+  min-height: 1200px;
+}
+
+.cursor-hand{
+  cursor: pointer;  
+}
+

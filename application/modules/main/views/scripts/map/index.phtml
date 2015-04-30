@@ -1,0 +1,125 @@
+<?php $this->headScript()->appendFile('https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false') ?>
+<?php $this->headScript()->appendFile('/js/modules/map.js'); ?> 
+<?php $this->headScript()->appendFile('/js/bootstrap-slider.js'); ?> 
+<?php $this->headScript()->appendFile('/js/jquery.countdown360.js'); ?> 
+<?php $this->headStyle()->appendStyle('/css/slider.css'); ?>
+<?php echo $this->headLink()->appendStylesheet('/css/slider.css'); ?>
+
+<div id="divSplit">
+	<div class="row bg-white panel-data m-top-3">
+		<div class="span12 text-center">
+			<div id="Map" style="width:100%;height:400px;">
+
+			</div>
+		</div>
+	</div>
+
+	<div class="row panel-data">        
+		<div class="span12">
+            <div class="well bg-white">
+                <div class="span4"> 
+                    Intervalo de Actualización <b><span id="labelMinutes">60 </span> segs.</b>
+                </div>
+                <div class="span4">                 
+                    <input id="slideTimeUp" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="120" data-slider-step="1" data-slider-value="60"/>
+                </div>
+                <div class="span4">                 
+                    <!--<span id="counterUp" class="fa-2">60</span>-->
+                    <div id="countdown"></div>
+                </div>                
+            </div>
+			<!-- block -->
+            <div class="block">
+                <div class="navbar navbar-inner">
+                    <div class="muted pull-left  block-header">Viajes</div>
+					<div class="btn-group pull-right">
+                            <a href="javascript:editTravel(-1);"><button class="btn btn-success">Nuevo Viaje <i class="icon-plus icon-white"></i></button></a>
+					</div>
+                </div>
+                <div class="block-content collapse in">
+                    <div class="span12">
+                        <div id="divTbody">
+
+                        </div>                        
+                    </div>
+                </div>
+            </div>
+            <!-- /block -->
+		</div>
+	</div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade hide modal-lg" id="myModalTravel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+  <div class="modal-dialog ">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" >Información del Viaje</h4>
+      </div>
+      <div class="modal-form i-body">             
+        <img id="loader1" class="offset4" src="/images/assets/loading.gif" alt="loading gif"/>
+        <iframe class="hmodal550" id="iFrameModaltravel" src="" style="zoom:0" frameborder="0"></iframe>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade hide" id="myModalOptions" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="tittleMessage">Terminar el Viaje</h4>
+      </div>
+      <div class="modal-body i-body">  
+        <div id="divMessage"></div>
+      </div>
+    </div>
+  </div>
+</div> 
+
+<div id="MyModalConfirm" class="modal hide">
+    <div class="modal-header">
+        <a href="#" data-dismiss="modal" aria-hidden="true" class="close">×</a>
+         <h3>Terminar Viaje</h3>
+    </div>
+    <div class="modal-body">
+        <p>¿Desea terminar el viaje #<span id="lblConfirm"></span>?</p>
+    </div>
+    <div class="modal-footer">
+      <a href="javascript:cancelConfirm();" id="btnYes" class="btn danger">Aceptar</a>
+      <a href="#" data-dismiss="modal" aria-hidden="true" class="btn secondary">Cancelar</a>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade hide" id="myModalInc" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" >Nueva Incidencia</h4>
+      </div>
+      <div class="modal-body i-body">
+        <img id="loader2" class="offset4" src="/images/assets/loading.gif" alt="loading gif"/>             
+        <iframe class="hmodal280" id="iFrameModalinc" src="" style="zoom:0" frameborder="0"></iframe>
+      </div>
+    </div>
+  </div>
+</div> 
+
+<div class="modal fade hide modal-lg" id="myModalManual" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+  <div class="modal-dialog ">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" >Nueva Posición</h4>
+      </div>
+      <div class="modal-form i-body">             
+        <img id="loader3" class="offset4" src="/images/assets/loading.gif" alt="loading gif"/>
+        <iframe class="hmodal500" id="iFrameModaManual" src="" style="zoom:0" frameborder="0"></iframe>
+      </div>
+    </div>
+  </div>
+</div>

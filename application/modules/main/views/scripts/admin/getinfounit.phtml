@@ -1,0 +1,83 @@
+<?php $this->headScript()->appendFile('/js/modules/validateUnits.js') ?> 
+<div class="row panel-data">
+    <input id="hRefLinkMain" type="hidden" value="/main/admin/index" />
+	<div class="span12">
+		<!-- block -->
+        <div class="block">
+            <div class="navbar navbar-inner block-header">
+                <div class="muted pull-left">
+					<a href="javascript:backToMain()">
+						<i class="icon-circle-arrow-left fa-1"></i></a>
+                	Información de la Unidad</div>
+            </div>
+            <div class="block-content collapse in">
+                <div class="span12">
+				<!-- BEGIN FORM-->
+				<form method="POST" action="/main/admin/getinfounit" id="FormData" class="form-horizontal ">
+	                <input type="hidden" name="optReg" value="<?php echo ($this->idToUpdate>0) ? 'update': 'new';?>" />
+	                <input type="hidden" name="catId" value="<?php echo $this->catId; ?>" />
+	                
+	                <?php if($this->resultOp=='okRegister'): ?>
+	                    <div class="alert alert-success">
+	                        <button class="close" data-dismiss="alert"></button>
+	                        Datos se almacenaron correctamente.
+	                    </div>                
+	                <?php endif; ?>					
+		                <fieldset>
+		                    <div id="errorMsg" class="alert alert-error hide">
+		                        <button class="close" data-dismiss="alert"></button>
+		                        Alguno de los datos estan incorrectos,favor de verificarlos.
+		                    </div>
+		                    <div class="alert alert-success hide">
+		                        <button class="close" data-dismiss="alert"></button>
+		                        Datos correctos
+		                    </div>
+							<div class="control-group">
+								<label class="control-label">Transportista<span class="required">*</span></label>
+								<div class="controls">
+									<select class="span6 m-wrap" name="inputTransportista">
+										<option value="">Seleccionar una opción</option>
+		                                <?php foreach ($this->transportistas as $key => $item): ?>
+		                                    <option <?php echo ($item['ID_TRANSPORTISTA'] == @$this->data['ID_TRANSPORTISTA']) ? 'selected':'';?> value="<?php echo $item['ID_TRANSPORTISTA']?>"><?php echo $item['DESCRIPCION']?></option>
+		                                <?php endforeach; ?>
+									</select>
+								</div>
+							</div>		                    
+							<div class="control-group">
+								<label class="control-label">No. Eco<span class="required">*</span></label>
+								<div class="controls">
+									<input type="text" name="inputEco" data-required="1" class="span6 m-wrap" value="<?php echo @$this->data['ECONOMICO']; ?>"/>
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label">Placas<span class="required">*</span></label>
+								<div class="controls">
+									<input name="inputPlacas" type="text" class="span6 m-wrap" value="<?php echo @$this->data['PLACAS']; ?>"/>
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label">Identificador<span class="required">*</span></label>
+								<div class="controls">
+									<input name="inputIden" type="text" class="span6 m-wrap" value="<?php echo @$this->data['IDENTIFICADOR']; ?>"/>
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label">Estatus<span class="required">*</span></label>
+								<div class="controls">
+									<select class="span6 m-wrap" name="inputStatus">
+										<?php echo $this->status; ?>
+									</select>
+								</div>
+							</div>
+							<div class="form-actions">
+								<button type="submit" class="btn btn-primary">Guardar</button>
+								<button type="button" class="btn" onClick="javascript:backToMain()">Cancel</button>
+							</div>
+					</fieldset>
+				</form>
+				<!-- END FORM-->
+			</div>
+		    </div>
+		</div>
+	</div>
+</div>  

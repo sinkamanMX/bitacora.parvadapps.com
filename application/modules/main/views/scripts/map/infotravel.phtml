@@ -1,0 +1,238 @@
+<?php $this->headScript()->appendFile('https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false') ?>
+<?php $this->headScript()->appendFile('/js/modules/travelsinfo.js') ?> 
+
+<ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
+    <li class="active"><a href="#gral" data-toggle="tab">Datos del Viaje</a></li>
+    <li><a href="#incidencias" data-toggle="tab">Incidencias</a></li>     
+    <li><a href="#map" data-toggle="tab">Mapa</a></li>
+	<li><a href="#recorrido" data-toggle="tab">Recorrido</a></li>      
+</ul>
+
+<div id="my-tab-content" class="tab-content">
+    <div class="tab-pane active" id="gral">
+		<?php if($this->resultOp=='okRegister'): ?>
+		    <div class="alert alert-success">
+		        <button class="close" data-dismiss="alert"></button>
+		        Datos registrados correctamente.
+				<script>
+					parent.closeWindow();
+				</script>		        
+		    </div>  
+		<?php endif; ?>	
+			<form method="POST" action="/main/map/infotravel" id="FormData" class="form-horizontal ">
+                <input type="hidden" name="optReg" value="<?php echo ($this->idToUpdate>0) ? 'update': 'new';?>" />
+                <input type="hidden" name="catId" value="<?php echo $this->catId; ?>" />
+				<fieldset>
+					<div class="">
+						<div class="span6">
+							<div class="control-group">
+								<label class="control-label">Inicio<span class="required">*</span></label>
+								<div class="controls">
+			                          <input id="inputFechaIn" name="inputFechaIn" data-required="1"  type="text" class="form-control" value="<?php echo @$this->data['INICIO']; ?>" id="inputDate" <?php echo (@$this->data['ID_ESTATUS']>1 && isset($this->data['ID_ESTATUS']))  ? 'disabled': ''; ?> >
+								</div>
+							</div>				
+						</div>
+						<?php $disabledFecFin = '';
+							if($this->idToUpdate>-1){
+								if(@$this->data['ID_ESTATUS']==4 && isset($this->data['ID_ESTATUS'])){
+									$disabledFecFin  = 'disabled';
+								}
+							}else{
+								$disabledFecFin  = 'disabled';
+							}
+							?>
+						<div class="span6">
+							<div class="control-group">
+								<label class="control-label">Fin<span class="required">*</span></label>
+								<div class="controls">
+									<input type="text" id="inputFechaFin" name="inputFechaFin" class="m-wrap" value="<?php echo (@$this->data['FIN']); ?>"  <?php  echo $disabledFecFin;?> >
+								</div>
+							</div>							
+						</div>						
+					</div>
+
+					<div class="">
+						<div class="span6">
+							<div class="control-group">
+								<label class="control-label">Número<span class="required">*</span></label>
+								<div class="controls">
+									<input type="text" name="inputNoTravel" data-required="1" class="span4 m-wrap" value="<?php echo (@$this->data['CLAVE']); ?>">
+								</div>
+							</div>
+						</div>
+						<div class="span6">
+							<div class="control-group">
+								<label class="control-label">Descripción<span class="required">*</span></label>
+								<div class="controls">
+									<input type="text" name="inputDescripcion" data-required="1" class="span4 m-wrap" value="<?php echo (@$this->data['DESCRIPCION']); ?>">
+								</div>
+							</div>							
+						</div>
+					</div>
+
+					<div class="">
+						<div class="span6">
+							<div class="control-group">
+								<label class="control-label">Sucursal<span class="required">*</span></label>
+								<div class="controls">
+									<select class="span4 m-wrap" id="inputSucursal" name="inputSucursal" onChange="getoptionsCbo('Cliente','clients',this.value,false);">
+										<option value="">Seleccionar una opción</option>
+				                        <?php foreach ($this->sucursales as $key => $item): ?>
+				                            <option <?php echo ($item['ID_SUCURSAL'] == @$this->data['ID_SUCURSAL']) ? 'selected':'';?> value="<?php echo $item['ID_SUCURSAL']?>"><?php echo $item['DESCRIPCION']?></option>
+				                        <?php endforeach; ?>
+									</select>									
+								</div>
+							</div>				
+						</div>	
+
+						<div class="span6">
+							<div class="control-group">
+								<label class="control-label">Cliente<span class="required">*</span></label>
+								<div class="controls">
+									<div id="divCliente">
+										<select class="span4 m-wrap" id="inputCliente" name="inputCliente">
+											<option value="">Seleccionar una opción</option>
+											<?php echo @$this->clientes;?>
+										</select>
+									</div>
+								</div>
+							</div>					
+						</div>						
+					</div>					
+
+
+					<div class="span12">
+						<div class="control-group">
+							<label class="control-label">Transportistas<span class="required">*</span></label>
+							<div class="controls">
+								<select class="span4 m-wrap" name="inputTransportista"  id="inputTransportista"  onChange="getoptionsCbo('Operadores','operators',this.value,false);getoptionsCbo('Unidades','units',this.value,false);">
+									<option value="">Seleccionar una opción</option>
+			                        <?php foreach ($this->transportistas as $key => $item): ?>
+			                            <option <?php echo ($item['ID_TRANSPORTISTA'] == @$this->idTransportista) ? 'selected':'';?> value="<?php echo $item['ID_TRANSPORTISTA']?>"><?php echo $item['DESCRIPCION']?></option>
+			                        <?php endforeach; ?>
+								</select>
+							</div>
+						</div>	
+					</div>
+
+					<div class="">
+						<div class="span6">
+							<div class="control-group">
+								<label class="control-label">Unidad<span class="required">*</span></label>
+								<div class="controls">
+									<div id="divUnidades">
+										<select class="span4 m-wrap" name="inputUnidades" id="inputUnidades">
+											<option value="">Seleccionar una opción</option>
+					                        <?php foreach ($this->unidades as $key => $item): ?>
+					                            <option <?php echo ($item['ID'] == @$this->data['ID_UNIDAD']) ? 'selected':'';?> value="<?php echo $item['ID']?>"><?php echo $item['NAME']?></option>
+					                        <?php endforeach; ?>
+										</select>
+									</div>
+								</div>
+							</div>						
+						</div>			
+						<div class="span6">
+							<div class="control-group">
+							<label class="control-label">Operador<span class="required">*</span></label>
+							<div class="controls">
+								<div id="divOperadores">
+									<select class="span4 m-wrap"  name="inputOperadores" id="inputOperadores">
+										<option value="">Seleccionar una opción</option>
+				                        <?php foreach ($this->operadores as $key => $item): ?>
+				                            <option <?php echo ($item['ID'] == @$this->data['ID_OPERADOR']) ? 'selected':'';?> value="<?php echo $item['ID']?>"><?php echo $item['NAME']?></option>
+				                        <?php endforeach; ?>
+									</select>
+								</div>
+							</div>
+							</div>			
+						</div>			
+					</div>
+					<div class="span12">
+				    	<div class="col-xs-4 col-md-5">
+							<div class="pull-right">			
+								<button type="submit" class="btn btn-default bg-btn-send">Enviar</button>
+							</div>    
+				    	</div>						
+					</div>
+				</fieldset>
+			</form>
+
+
+
+    </div>
+    <div class="tab-pane" id="incidencias">
+
+		<table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered"  id="dataTable">
+			<thead>
+			    <tr>
+			        <th>Prioridad</th>
+			        <th>Descripción</th>
+			        <th>Comentario</th>
+			        <th>Usuario</th>
+			        <th>Creado</th>
+			    </tr>
+			</thead>
+			<tbody>
+				<?php foreach($this->incidencias as $key => $items): ?>
+					<tr>
+						<td><?php echo $items['PRIORIDAD'];?></td>
+						<td><?php echo $items['DESCRIPCION'];?></td>
+						<td><?php echo $items['COMENTARIO'];?></td>
+						<td><?php echo $items['USUARIO'];?></td>
+						<td><?php echo $items['CREADO'];?></td>
+					</tr>
+				<?php  endforeach;?>
+			</tbody>
+		</table>
+
+
+    </div>
+    <div class="tab-pane" id="recorrido">
+		<div class="button-excel">
+			<?php if(count($this->recorrido)>0): ?>
+				<div class="btn-group">
+				 <a href="/main/reports/exportdatatravel?travelID=<?php echo $this->catId; ?>"><button class="btn btn-success"> Exportar <i class="icon-file icon-white"></i></button></a>
+				</div>
+			<?php endif;?>
+        </div>
+		<table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered"  id="tableRecorrido">
+			<thead>
+			    <tr>
+			        <th>Fecha GPS</th>
+			        <th>Fecha Recibido</th>
+			        <th>Latitud</th>
+			        <th>Longitud</th>
+			        <th>Velocidad</th>
+			        <th>Angulo</th>
+			        <th>Ubicación</th>
+			        <th>Tipo</th>
+			        <th>Incidencia</th>
+			    </tr>
+			</thead>
+			<tbody>
+				<?php $result = '';?>
+				<?php foreach($this->recorrido as $key => $items): ?>
+					<tr>
+						<td><?php echo $items['FECHA'];?></td>
+						<td><?php echo $items['CREADO'];?></td>
+						<td><?php echo $items['LATITUD'];?></td>
+						<td><?php echo $items['LONGITUD'];?></td>
+						<td><?php echo round($items['VELOCIDAD'],2);?></td>
+						<td><?php echo round($items['ANGULO'],2);?></td>
+						<td><?php echo $items['UBICACION'];?></td>
+						<td><?php echo $items['MODO'];?></td>
+						<td><?php echo $items['INCIDENCIA'];?></td>								
+					</tr>
+
+					<?php $result .= ($result!="") ? "!" : "";?>
+					<?php $result .= $items['LATITUD']."|".$items['LONGITUD']."|".$items['FECHA']."|".
+							$items['UBICACION']."|".round($items['VELOCIDAD'],2)."|".round($items['ANGULO'],2)."|".$items['MODO']."|".$items['INCIDENCIA'];?>
+				<?php  endforeach;?>
+			</tbody>
+		</table>
+		<div id="positions" class="hide"><?php echo $result; ?></div>    	
+    </div>
+    <div class="tab-pane" id="map">
+    	<div id="MapRecorrido" style="width:98%;height:350px;"></div>
+    </div>    
+</div>

@@ -1,0 +1,161 @@
+<?php $this->headScript()->appendFile('/js/modules/travels/payTravel.js') ?> 
+<div class="row panel-data">
+    <input id="hRefLinkMain" type="hidden" value="/travels/main/index" />
+	<div class="span12">
+        <div class="block">
+            <div class="navbar navbar-inner block-header">
+                <div class="muted pull-left">
+					<a href="javascript:history.back();">
+						<i class="icon-circle-arrow-left fa-1"></i></a> Incidencias del Viaje
+				</div>
+            </div>
+            <div class="block-content collapse in">
+            	<div class="span12">
+            		<?php if(isset($this->aErrors['no-insert'])):?>
+						<div id="divpErrorLogin" class="alert alert-error" style="display:block;">
+						  <button type="button" class="close" data-dismiss="alert">×</button>
+						  <h4>Error</h4>
+						  <div>Ocurrio un problema al insertar el viaje, favor de intentar más tarde.</div>
+						</div>	
+            		<?php endif;?>            		
+					<form method="POST" action="/travels/main/paytravel" id="FormData" class="form-horizontal ">
+		                <input type="hidden" name="optReg" value="registerTravel" />            			
+            			<fieldset>		                
+            				<!--
+		                	<div class="span12">
+		                		<div class="span4">
+		                			<div class="span5"><b>Id Viaje: </b></div>
+		                			<div class="span7"><?php echo $this->dataTravel['inputNoTravel']; ?></div>
+		                		</div>
+		                		<div class="span4">
+		                			<div class="span5"><b>Ruta: </b></div>
+		                			<div class="span7"><?php echo $this->dataTravel['inputNoTravel']; ?></div>
+		                		</div>
+		                		<div class="span4">
+		                			<div class="span5"><b>Descripción: </b></div>
+		                			<div class="span7"><?php echo $this->dataTravel['inputDescripcion']; ?></div>
+		                		</div>                		
+		                	</div>
+		                	
+		                	<div class="span12 no-margin-left">
+		              			<div class="span4">
+		                			<div class="span5"><b>Fecha Inicio: </b></div>
+		                			<div class="span7"><?php echo $this->dataTravel['inputFechaIn']; ?></div>
+		                		</div>
+		                		<div class="span4">
+		                			<div class="span5"><b>Fecha Fin: </b></div>
+		                			<div class="span7"><?php echo $this->dataTravel['inputFechaFin']; ?></div>
+		                		</div>
+								<div class="span4">
+		                			<div class="span5"><b>Tipo de Viaje: </b></div>
+		                			<div class="span7"><?php echo $this->dataTravel['inputDescripcion']; ?></div>
+		                		</div>   
+		                	</div>
+		                	<div class="span12 no-margin-left">           		
+		              			<div class="span4">
+		                			<div class="span5"><b>Horas del Viaje: </b></div>
+		                			<div class="span7"><?php echo $this->dataTravel['inputFechaIn']; ?></div>
+		                		</div>
+		                		<div class="span4">
+		                			<div class="span5"><b>Precio Hora: </b></div>
+		                			<div class="span7"><?php echo $this->dataTravel['inputFechaFin']; ?></div>
+		                		</div>
+		                		<div class="span4">
+		                			<div class="span5"><b>Total por Viaje: </b></div>
+		                			<div class="span7"><?php echo $this->dataTravel['inputDescripcion']; ?></div>
+		                		</div>                      		
+		                	</div>
+		                	<div class="span12 no-margin-left">
+		                		<h4>Total Viaje</h4>
+		                		<table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="dataTable">
+		                			<tr>
+		                				<td class="text-center">Id Viaje</td>
+		                				<td>Ruta</td>
+		                				<td class="text-center">Tipo de Viaje</td>
+		                				<td class="text-center">Horas de Viaje</td>
+		                				<td class="text-center">Precio Hora</td>
+		                				<td class="text-center span2">Total</td>
+		                			</tr>
+		                			<tr>
+		                				<td class="text-center"><?php echo $this->dataTravel['inputNoTravel']; ?></td>
+		                				<td><?php echo $this->aMoreInfo['DESCRIPCION']; ?></td>
+		                				<td class="text-center"><?php echo $this->aTipoViaje['T_DESC']; ?></td>
+		                				<td class="text-center"><?php echo $this->aMoreInfo['TIEMPO_ESTIMADO']; ?></td>		                				
+		                				<td class="text-center">$ <?php echo number_format($this->aTipoViaje['COSTO'], 2, '.', ' '); ?></td>
+		                				<td class="text-center span2">$ <?php echo number_format(($this->aMoreInfo['TIEMPO_ESTIMADO'] * $this->aTipoViaje['COSTO']), 2, '.', ' '); ?>
+		                					<input type="hidden" id="itotalViaje" value="<?php echo ($this->aMoreInfo['TIEMPO_ESTIMADO'] * $this->aTipoViaje['COSTO']); ?>"/>
+		                				</td>
+		                			</tr>			                					                			                			
+		                		</table>
+		                	</div>	
+		                	-->	                	
+		                	<div class="span12 no-margin-left">
+		                		<h4>Servicios Extras</h4>
+		                		<table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="dataTable">
+		                			<tr>		                				
+		                				<td>Descripcion</td>
+		                				<td class="text-center">Costo</td>                				
+		                				<td class="text-center">Cantidad</td>
+		                				<td class="text-center span2">Total</td>
+		                			</tr>
+		                			<?php foreach($this->aIncidencias as $key => $items): ?>
+		                			<tr>
+		                				<td class=""><?php echo $items['DESCRIPCION']; ?></td>
+		                				<td class="text-center">$ <?php echo number_format($items['PRECIO_EXTRA'], 2, '.', ' '); ?></td>
+		                				<td class="text-center">
+											<select class="span6 m-wrap" name="cboInc_<?php echo $items['ID_EXTRA']; ?>" onChange="calculatePrice(this.value,<?php echo $items['ID_EXTRA']; ?>,<?php echo $items['PRECIO_EXTRA']; ?>);">
+												<?php echo @$this->aNumbers;?>
+											</select>
+										</td>		                				
+		                				<td class="text-center"><span id="lbTotal<?php echo $items['ID_EXTRA']; ?>">$ <?php echo number_format(0, 2, '.', ' '); ?></span>
+		                					<input type="hidden" id="inputTot<?php echo $items['ID_EXTRA']; ?>" class="txtTotal" value="0.00">
+		                				</td>
+		                			</tr>
+		                			<?php endforeach;?>
+		                			<tr>
+		                				<td class="text-right" colspan="3"><b>Total Incidencias</b></td>
+		                				<td class="text-center"><span id="lbTotal">$ <?php echo number_format(0, 2, '.', ' '); ?></span>
+		                				</td>
+		                			</tr>                			
+		                		</table>
+		                	</div>
+		                	<!--
+		                	<div class="span12 no-margin-left">
+		                		<h4>Resumen del Pago</h4>
+		                		<table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="dataTable">
+		                			<tr>
+		                				<td class="text-right" colspan="3"><b>Total Viaje</b></td>
+		                				<td class="text-center span2"><span id="lbTotal">$ <?php echo number_format(($this->aMoreInfo['TIEMPO_ESTIMADO'] * $this->aTipoViaje['COSTO']), 2, '.', ' '); ?></span>
+											<input type="hidden" id="inputTotalTravel" name="inputTotalTravel" value="0" />
+		                				</td>
+		                			</tr>
+		                			<tr>
+		                				<td class="text-right" colspan="3"><b>Total Incidencias</b></td>
+		                				<td class="text-center"><span id="lbTotalTravel">$ <?php echo number_format(0, 2, '.', ' '); ?></span>
+											<input type="hidden" id="inputTotalInc" name="inputTotalInc" value="0" />
+		                				</td>
+		                			</tr>		
+
+		                			<tr>
+		                				<td class="text-right" colspan="3"><b>Total por Pagar</b></td>
+		                				<td class="text-center"><span id="lbTotalBig">$ <?php echo number_format(0, 2, '.', ' '); ?></span>
+		                					<input type="hidden" id="inputBigTotal" name="inputBigTotal" value="0" />
+		                				</td>
+		                			</tr>	                				                					                			                			
+		                		</table>
+		                	</div>-->		                	
+
+							<div class="">
+						    	<div class="col-xs-4 col-md-5">
+									<div class="pull-right">			
+										<button type="submit" class="btn btn-default bg-btn-send">Siguiente</button>
+									</div>    
+						    	</div>						
+							</div>
+						</fieldset>                	
+					</form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

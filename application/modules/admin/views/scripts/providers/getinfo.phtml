@@ -1,0 +1,112 @@
+<?php $this->headScript()->appendFile('/js/modules/providers/validateProviders.js') ?>  
+<?php $disabled = ($this->dataUser['EDITAR']==0 && $this->dataUser['LECTURA']==1) ? 'disabled':'';?>
+<div class="row panel-data">
+    <input id="hRefLinkMain" type="hidden" value="/admin/providers/index" />
+	<div class="span12">
+		<!-- block -->
+        <div class="block">
+            <div class="navbar navbar-inner block-header">
+                <div class="muted pull-left">
+					<a href="javascript:backToMain()">
+						<i class="icon-circle-arrow-left fa-1"></i></a>
+                	Información del Proveedor</div>
+            </div>
+            <div class="block-content collapse in">
+                <div class="span12">
+					<?php if($this->dataUser['EDITAR']==0 && $this->dataUser['LECTURA']==0): ?>
+						<div id="divpErrorLogin" class="alert alert-error" style="display:block;">
+						  <button type="button" class="close" data-dismiss="alert">×</button>
+						  <h4>Error</h4>
+						  <div>Usted no tiene permiso para ver esta información</div>
+						</div>						
+					<?php else:?>	
+					<!-- BEGIN FORM-->
+					<?php if($disabled!='disabled'):?>
+					<form method="POST" action="/admin/providers/getinfo" id="FormData" class="form-horizontal ">
+					<?php endif;?>	
+		                <input type="hidden" name="optReg" value="<?php echo ($this->idToUpdate>0) ? 'update': 'new';?>" />
+		                <input type="hidden" name="catId" value="<?php echo $this->catId; ?>" />
+		                
+		                <?php if($this->resultOp=='okRegister'): ?>
+		                    <div class="alert alert-success">
+		                        <button class="close" data-dismiss="alert"></button>
+		                        Datos se almacenaron correctamente.
+		                    </div>                
+		                <?php endif; ?>	
+		                	<fieldset>
+								<div class="span12">
+		                			<div class="span12">
+										<div class="control-group">
+											<label class="control-label">Descripcion<span class="required">*</span></label>
+											<div class="controls">
+												<input type="text" name="inputDescripcion"  class="span12 m-wrap upperClass" value="<?php echo @$this->data['DESCRIPCION']; ?>"  <?php echo $disabled;?> >
+											</div>
+										</div>	
+		                			</div>								
+		                		</div>
+								<div class="span12 no-margin-left">
+		                			<div class="span12">
+										<div class="control-group">
+											<label class="control-label">URL<span class="required">*</span></label>
+											<div class="controls">
+												<input type="text" name="inputUrl"  class="span12 m-wrap " value="<?php echo @$this->data['URL']; ?>"  <?php echo $disabled;?> >
+											</div>
+										</div>	
+		                			</div>								
+		                		</div>
+
+		                		<div class="span12 no-margin-left">
+		                			<div class="span6">
+										<div class="control-group">
+											<label class="control-label">Usuario<span class="required">*</span></label>
+											<div class="controls">
+												<input name="inputUsuario" type="text" class="m-wrap span12" value="<?php echo @$this->data['USUARIO']; ?>" <?php echo $disabled;?> >
+											</div>
+										</div>		                				
+		                			</div>
+		                			<div class="span6">
+										<div class="control-group">
+											<label class="control-label">Contraseña<span class="required">*</span></label>
+											<div class="controls">
+												<input name="inputPassword" type="text" class="m-wrap span12" value="<?php echo @$this->data['PASSWORD']; ?>" <?php echo $disabled;?> >
+											</div>
+										</div>		                				
+		                			</div>	                			
+		                		</div>
+
+								<div class="span12 no-margin-left">
+		                			<div class="span12">
+										<div class="control-group">
+											<label class="control-label">Comentario<span class="required">*</span></label>
+											<div class="controls">
+												<input type="text" name="inputComentario"  class="span12 m-wrap upperClass" value="<?php echo @$this->data['COMENTARIO']; ?>"  <?php echo $disabled;?> >
+											</div>
+										</div>	
+		                			</div>								
+		                		</div>		                		
+		                		
+								<div class="control-group">
+									<label class="control-label">Estatus<span class="required">*</span></label>
+									<div class="controls">
+										<select class="span4 m-wrap" name="inputStatus" <?php echo $disabled;?> >
+											<?php echo $this->aStatus; ?>
+										</select>
+									</div>
+								</div>
+								<?php if($disabled!='disabled'):?>
+								<div class="form-actions">
+									<button type="submit" class="btn btn-primary">Guardar</button>
+									<button type="button" class="btn" onClick="javascript:backToMain()">Cancel</button>
+								</div>
+								<?php endif;?>
+						</fieldset>
+					<?php if($disabled!='disabled'):?>
+					</form>
+					<?php endif;?>
+					<!-- END FORM-->																
+					<?php endif;?>
+				</div>
+		    </div>
+		</div>
+	</div>
+</div>  

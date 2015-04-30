@@ -1,0 +1,199 @@
+<?php $this->headScript()->appendFile('https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false') ?>
+<?php $this->headScript()->appendFile('/js/modules/monitor/functionsMaps.js') ?>  
+<div class="row panel-data">
+    <input id="hRefLinkEdit" type="hidden" value="/admin/extras/getinfo?idRow=" />
+    <div class="span3 margin-l15px">
+        <div class="block row-min-h600">
+            <div class="navbar navbar-inner block-header">
+                <div class="muted pull-left"><a href="/monitor/main/index">
+                        <i class="icon-circle-arrow-left fa-1"></i></a> Información del Viaje</div>
+            </div>
+            <div class="block-content collapse in">
+                <div class="span12">
+
+                <?php if($this->resultOp=='okRegister'): ?>
+                    <div class="alert alert-success">
+                        <button class="close" data-dismiss="alert"></button>
+                        Datos actualizados correctamente.
+                    </div>  
+                <?php endif; ?> 
+                    <table>
+                        <input type="hidden" id="inputLatOrigen"    name="inputLatOrigen"  value="<?php echo @$this->data['LATITUD_ORIGEN'];  ?>">
+                        <input type="hidden" id="inputLonOrigen"    name="inputLonOrigen"  value="<?php echo @$this->data['LONGITUD_ORIGEN'];  ?>">
+                        <input type="hidden" id="inputLatDestino"   name="inputLatDestino" value="<?php echo @$this->data['LATITUD_DESTINO']; ?>">
+                        <input type="hidden" id="inputLonDestino"   name="inputLonDestino" value="<?php echo @$this->data['LONGITUD_DESTINO']; ?>">                                                                 
+                        <tr><td><b>Clave viaje</b></td>
+                            <td><?php echo $this->data['CLAVE'];?></td></tr>
+                        <tr><td><b>Estatus</b></td>
+                            <td><?php echo $this->data['N_STATUS'];?></td></tr>       
+                        <tr><td><b>Fecha Inicio</b></td>
+                            <td><?php echo $this->data['INICIO'];?></td></tr>
+                        <tr><td><b>Fecha Fin</b></td>
+                            <td><?php echo $this->data['FIN'];?></td></tr>
+                        <tr><td><b>Tipo Viaje</b></td>
+                            <td><?php echo $this->data['TIPO'];?></td></tr>
+                        <tr><td><b>Ruta</b></td>
+                            <td><?php echo $this->data['N_RUTA'];?></td></tr>
+                        <tr><td><b>Sucursal</b></td>
+                            <td><?php echo $this->data['SUCURSAL'];?></td></tr>
+                        <tr><td><b>Cliente</b></td>
+                            <td><?php echo $this->data['CLIENTE'];?></td></tr>
+                        <tr><td><b>Transportista</b></td>
+                            <td><?php echo $this->data['N_TRANS'];?></td></tr>
+                        <tr><td><b>Unidad</b></td>
+                            <td><?php echo $this->data['PLACAS'];?></td></tr>
+                        <tr><td><b>Eco</b></td>
+                            <td><?php echo $this->data['ECONOMICO'];?></td></tr>                                                       
+                        <tr><td><b>Operador</b></td>
+                            <td><?php echo $this->data['N_OPERADOR'];?></td></tr>
+                        <tr><td><b>Medio de Contacto</b></td>
+                            <td><?php echo $this->data['MEDIO_CONTACTO'];?></td></tr>
+                    </table>                    
+                </div>             
+            </div>
+        </div>        
+    </div>
+    <div class="span9 margin-l15px">
+        <input id="hRefLinkEdit" type="hidden" value="/admin/extras/getinfo?idRow=" />
+        <div class="block row-min-h600">
+            <div class="navbar navbar-inner block-header">
+                <div class="muted pull-left">Detalle del Viaje</div>
+                <p class="pull-right"> 
+                    <?php if($this->data['ID_ESTATUS']==2) :?>
+                        <button class="btn btn-danger"  onClick="cancelTravel(<?php echo $this->data['ID_VIAJE'];?>)"><i class="icon-stop icon-white"></i>  Terminar Viaje </button>
+                        <button class="btn btn-primary" onClick="setPositionManual(<?php echo $this->data['ID_VIAJE'];?>)"><i class="icon-globe icon-white"></i>  Agregar Pocisión</button>
+                        <!--<button class="btn btn-warning" onClick="setIncidencia(<?php echo $this->data['ID_VIAJE'];?>)"><i class="icon-warning-sign icon-white"></i>   Agregar Incidencia</button>-->
+                    <?php elseif($this->data['ID_ESTATUS']==1) :?>
+                        <button class="btn btn-success"  onClick="startStopTravel(<?php echo $this->data['ID_VIAJE'];?>,'start')"><i class="icon-play icon-white"></i>  Iniciar Viaje </button>
+                    <?php endif;?>                    
+                </p>
+            </div>
+            <div class="block-content collapse in">
+                <div class="span12">
+                    <ul id="tabs" class="nav nav-tabs bg-white" data-tabs="tabs">         
+                        <li class="active"><a href="#tab1" data-toggle="tab">Mapa</a></li>               
+                        <li><a href="#tab2" data-toggle="tab">Recorrido</a></li>
+                        <li><a href="#tab3" data-toggle="tab">Incidencias</a></li>      
+                        <div class="pull-right no-margin-left">
+                            <img src="/images/assets/origen.png">Lugar Origen
+                            <img src="/images/assets/destino.png">Lugar Destino
+                        </div>                             
+                    </ul>                    
+                    <div id="my-tab-content" class="tab-content bg-white">
+                        <div class="tab-pane active" id="tab1">
+                            <div id="Map" style="width:100%;height:500px;"></div> 
+                        </div>
+                        <div class="tab-pane" id="tab2">
+                            <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" >
+                                <thead>
+                                    <tr>
+                                        <th>Fecha GPS</th>
+                                        <th>Fecha Recibido</th>
+                                        <th>Latitud</th>
+                                        <th>Longitud</th>
+                                        <th>Velocidad</th>
+                                        <th>Angulo</th>
+                                        <th>Ubicación</th>
+                                        <th>Tipo</th>
+                                        <th>Incidencia</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php $result = '';?>
+                                    <?php foreach($this->aRecorrido as $key => $items): ?>
+                                        <tr>
+                                            <td><?php echo $items['FECHA'];?></td>
+                                            <td><?php echo $items['CREADO'];?></td>
+                                            <td><?php echo $items['LATITUD'];?></td>
+                                            <td><?php echo $items['LONGITUD'];?></td>
+                                            <td><?php echo round($items['VELOCIDAD'],2);?></td>
+                                            <td><?php echo round($items['ANGULO'],2);?></td>
+                                            <td><?php echo $items['UBICACION'];?></td>
+                                            <td><?php echo $items['MODO'];?></td>
+                                            <td><?php echo $items['INCIDENCIA'];?></td>                             
+                                        </tr>
+
+                                        <?php $result .= ($result!="") ? "!" : "";?>
+                                        <?php $result .= $items['LATITUD']."|".$items['LONGITUD']."|".$items['FECHA']."|".
+                                                $items['UBICACION']."|".round($items['VELOCIDAD'],2)."|".round($items['ANGULO'],2)."|".$items['MODO']."|".$items['INCIDENCIA'];?>
+                                    <?php  endforeach;?>
+                                </tbody>
+                            </table>  
+                            <div id="positions" class="hide"><?php echo $result; ?></div>                                
+                        </div>                        
+                        <div class="tab-pane" id="tab3">
+                            <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" >
+                                <thead>
+                                    <tr>
+                                        <th>Prioridad</th>
+                                        <th>Descripción</th>
+                                        <th>Comentario</th>
+                                        <th>Usuario</th>
+                                        <th>Creado</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach($this->aIncidencias as $key => $items): ?>
+                                        <tr>
+                                            <td><?php echo $items['PRIORIDAD'];?></td>
+                                            <td><?php echo $items['DESCRIPCION'];?></td>
+                                            <td><?php echo $items['COMENTARIO'];?></td>
+                                            <td><?php echo $items['USUARIO'];?></td>
+                                            <td><?php echo $items['CREADO'];?></td>
+                                        </tr>
+                                    <?php  endforeach;?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>    
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+</div> 
+
+<div id="MyModalConfirm" class="modal hide">
+    <div class="modal-header">
+        <a href="#" data-dismiss="modal" aria-hidden="true" class="close">×</a>
+         <h3>Terminar Viaje</h3>
+    </div>
+    <div class="modal-body">
+        <p>¿Desea terminar el viaje #<span id="lblConfirm"></span>?</p>
+    </div>
+    <div class="modal-footer">
+      <a href="javascript:cancelConfirm();" id="btnYes" class="btn danger">Aceptar</a>
+      <a href="#" data-dismiss="modal" aria-hidden="true" class="btn secondary">Cancelar</a>
+    </div>
+</div>   
+
+<!-- Modal -->
+<div class="modal fade hide" id="myModalInc" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" >Nueva Incidencia</h4>
+      </div>
+      <div class="modal-body i-body">
+        <img id="loader2" class="offset4" src="/images/assets/loading.gif" alt="loading gif"/>
+        <iframe class="hmodal280" id="iFrameModalinc" src="" style="zoom:0" frameborder="0"></iframe>
+      </div>
+    </div>
+  </div>
+</div>  
+
+<div class="modal fade hide modal-lg" id="myModalManual" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+  <div class="modal-dialog ">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" >Nueva Posición</h4>
+      </div>
+      <div class="modal-form i-body">             
+        <img id="loader3" class="offset4" src="/images/assets/loading.gif" alt="loading gif"/>
+        <iframe class="hmodal500" id="iFrameModaManual" src="" style="zoom:0" frameborder="0"></iframe>
+      </div>
+    </div>
+  </div>
+</div>

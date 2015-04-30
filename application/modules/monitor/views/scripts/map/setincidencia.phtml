@@ -1,0 +1,36 @@
+<?php $this->headScript()->appendFile('/js/modules/incidenciaInfo.js') ?> 
+<?php if($this->insert):?>
+	<script>
+		parent.icidenciaOk(<?php echo $this->catId; ?>);
+	</script>	
+<?php endif;?>
+<form method="POST" action="/monitor/map/setincidencia" id="FormData" class="form-horizontal ">
+    <input type="hidden" name="catId" value="<?php echo $this->catId; ?>" />
+    <input type="hidden" name="option" value="insert" />
+	<fieldset>
+		<div class="control-group">
+			<label class="control-label">Tipo de Incidencia<span class="required">*</span></label>
+			<div class="controls">
+				<select class="span4 m-wrap" id="inputIncidencia" name="inputIncidencia">
+					<option value="">Seleccionar una opción</option>
+                    <?php foreach ($this->incidencias as $key => $item): ?>
+                        <option value="<?php echo $item['ID_INCIDENCIA']?>"><?php echo $item['DESCRIPCION']?></option>
+                    <?php endforeach; ?>
+				</select>									
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">Comentario<span class="required">*</span></label>
+			<div class="controls"> 
+				<textarea id="inputComentario" name="inputComentario" class="form-control" rows="3"></textarea>
+			</div>
+		</div>										
+		<div class="span12">
+	    	<div class="col-xs-4 col-md-5">
+				<div class="pull-right">			
+					<button type="submit" class="btn btn-default bg-btn-send">Enviar</button>
+				</div>    
+	    	</div>						
+		</div>
+	</fieldset>
+</form>

@@ -1,0 +1,39 @@
+<div class="block-content">
+    <div class="row-fluid">
+        <!-- block -->
+        <div class="block">
+            <div class="navbar navbar-inner block-header">
+                <div class="muted pull-left">Activar Registro</div>
+            </div>
+            <div class="block-content collapse in">
+                <div class="span12">
+	                <?php if(count(@$this->errors)>0):?>
+       	                <?php if(@$this->errors['status']==1):?>
+							<div class="alert alert-error" style="display:block;">
+								<button type="button" class="close" data-dismiss="alert">×</button>
+								<b>¡Atención Error!</b>
+								<div>Ocurrio un error al activar su cuenta, favor de intentarlo mas tarde.</div>
+							</div>
+						<?php elseif(@$this->errors['errorConfig']==1):?>
+							<div class="alert alert-error" style="display:block;">
+								<button type="button" class="close" data-dismiss="alert">×</button>
+								<b>¡Atención Error!</b>
+								<div>El código expiro, favor de comunicarse con su adminsitrador.</div>
+							</div>								
+	                    <?php endif;?>    
+	                <?php endif; ?>          	
+
+	                <?php if(@$this->resultOp=='okRegister'):?>
+	                    <div class="alert alert-success alert-dismissable" style="display:block;">
+	                        <i class="fa fa-check"></i>	                        
+	                        <b>¡Atención!</b> 
+	                        La cuenta se ha activado de manera correcta.<br/>
+	                        Puede ingresar al portal dando click <a href="/">AQUI</a>
+	                    </div>						
+	                <?php endif;?> 
+                </div>
+            </div>
+        </div>
+        <!-- /block -->
+    </div>
+</div>

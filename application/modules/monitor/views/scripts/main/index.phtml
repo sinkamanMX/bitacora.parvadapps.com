@@ -1,0 +1,245 @@
+<?php $this->headScript()->appendFile('/js/modules/monitor/functionsMonitor.js') ?>   
+    <div class="row panel-data">
+        <input id="hRefLinkEdit" type="hidden" value="/admin/extras/getinfo?idRow=" />
+		<div class="span12">
+			<!-- block -->
+            <div class="block row-min-h600">
+                <div class="navbar navbar-inner block-header">
+                    <div class="muted pull-left"> Monitoreo de Viajes</div>
+                </div>
+                <div class="block-content collapse in">
+                    <div class="span12">                       
+
+                        <ul id="tabs" class="nav nav-tabs bg-white" data-tabs="tabs">                            
+                            <li class="<?php echo (@$this->dataUser['ID_PERFIL']==1) ? 'active': 'hide'; ?>"><a href="#tab1" data-toggle="tab">Asignación de Viajes</a></li>
+                            <li class="<?php echo (@$this->dataUser['ID_PERFIL']==1) ? '': 'hide'; ?>"><a href="#tabreasig" data-toggle="tab">Reasignación de Viajes</a></li>
+                            <li class="<?php echo (@$this->dataUser['ID_PERFIL']!=1) ? 'active': ''; ?>"><a href="#tab2" data-toggle="tab">Viajes Nuevos</a></li>     
+                            <li><a href="#tab3" data-toggle="tab">Viajes en Curso</a></li>
+                            <li><a href="#tab4" data-toggle="tab">Viajes Cerrados</a></li>      
+                        </ul>
+                        <div id="my-tab-content" class="tab-content bg-white">
+                            <div class="tab-pane <?php echo (@$this->dataUser['ID_PERFIL']==1) ? 'active': 'hide'; ?>" id="tab1">
+                                <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="dataTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Cliente</th>    
+                                            <th>Clave Viaje</th>
+                                            <th>Ruta</th>
+                                            <th>Unidad (ECO)</th>
+                                            <th>Fecha Prog. Inicio</th>
+                                            <th>Fecha Prog. Fin</th>
+                                            <th>Estatus</th>
+                                            <th> </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>                                
+                                        <?php foreach($this->aNoAssign as $key => $items): ?>  
+                                        <tr class="odd gradeX">
+                                            <td><?php echo $items['CLIENTE']; ?></td>
+                                            <td><?php echo $items['CLAVE']; ?></td>
+                                            <td><?php echo $items['DES_RUTA']; ?></td>
+                                            <td><?php echo $items['IDENTIFICADOR']; ?></td>
+                                            <td><?php echo $items['INICIO']; ?></td>
+                                            <td><?php echo $items['FIN']; ?></td>
+                                            <td><?php echo $items['STATUS_VIAJE'];?></td>
+                                            <td class="text-center">
+                                                <a onClick="openSearch(<?php echo $items['ID_VIAJE']; ?>);">
+                                                    <button class="btn-success"> <i class="icon-arrow-right icon-white"></i><i class=" icon-user icon-white"></i></button>
+                                                </a>
+                                            </td>
+                                        </tr>    
+                                        <?php endforeach;?>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="tab-pane <?php echo (@$this->dataUser['ID_PERFIL']==1) ? '': 'hide'; ?>" id="tabreasig">
+                                <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="dataTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Cliente</th>    
+                                            <th>Clave Viaje</th>
+                                            <th>Ruta</th>
+                                            <th>Unidad (ECO)</th>
+                                            <th>Fecha Prog. Inicio</th>
+                                            <th>Fecha Prog. Fin</th>
+                                            <th>Atendido por </th>
+                                            <th>Estatus</th>
+                                            <th> </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>                                
+                                        <?php foreach($this->aReassign as $key => $items): ?>  
+                                        <tr class="odd gradeX">
+                                            <td><?php echo $items['CLIENTE']; ?></td>
+                                            <td><?php echo $items['CLAVE']; ?></td>
+                                            <td><?php echo $items['DES_RUTA']; ?></td>                                            
+                                            <td><?php echo $items['IDENTIFICADOR']; ?></td>
+                                            <td><?php echo $items['INICIO']; ?></td>
+                                            <td><?php echo $items['FIN']; ?></td>
+                                            <td><?php echo $items['MONITOR']; ?></td>
+                                            <td><?php echo $items['STATUS_VIAJE'];?></td>
+                                            <td class="text-center">
+                                                <a onClick="openSearchReasign(<?php echo $items['ID_VIAJE']; ?>);">
+                                                    <button class="btn-warning"> <i class="icon-arrow-right icon-white"></i><i class=" icon-user icon-white"></i></button>
+                                                </a>
+                                            </td>
+                                        </tr>    
+                                        <?php endforeach;?>
+                                    </tbody>
+                                </table>
+                            </div>                            
+                            <div class="tab-pane  <?php echo (@$this->dataUser['ID_PERFIL']!=1) ? 'active': ''; ?>" id="tab2">
+                                <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="dataTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Cliente</th>    
+                                            <th>Clave Viaje</th>
+                                            <th>Ruta</th>
+                                            <th>Unidad (ECO)</th>
+                                            <th>Fecha Prog. Inicio</th>
+                                            <th>Fecha Prog. Fin</th>
+                                            <th>Estatus</th>
+                                            <th> </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>                                
+                                        <?php foreach($this->aAssignNew as $key => $items): ?>  
+                                        <tr class="odd gradeX">
+                                            <td><?php echo $items['CLIENTE']; ?></td>
+                                            <td><?php echo $items['CLAVE']; ?></td>
+                                            <td><?php echo $items['DES_RUTA']; ?></td>   
+                                            <td><?php echo $items['IDENTIFICADOR']; ?></td>                                         
+                                            <td><?php echo $items['INICIO']; ?></td>
+                                            <td><?php echo $items['FIN']; ?></td>
+                                            <td><?php echo $items['STATUS_VIAJE'];?></td>
+                                            <td class="text-center">
+                                                <button class="btn-success" onClick="startStopTravel(<?php echo $items['ID_VIAJE']; ?>,'start')"><i class="icon-play icon-white"></i></button>
+                                            </td>
+                                        </tr>    
+                                        <?php endforeach;?>
+                                    </tbody>
+                                </table>                                
+                            </div>
+                            <div class="tab-pane" id="tab3">
+                                <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="dataTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Cliente</th>    
+                                            <th>Clave Viaje</th>
+                                            <th>Ruta</th>
+                                            <th>Unidad (ECO)</th>
+                                            <th>Fecha Prog. Inicio</th>
+                                            <th>Fecha Prog. Fin</th>
+                                            <th>Estatus</th>
+                                            <th> </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>                                
+                                        <?php foreach($this->aAssignCurrent as $key => $items): ?>  
+                                        <tr class="odd gradeX">
+                                            <td><?php echo $items['CLIENTE']; ?></td>
+                                            <td><?php echo $items['CLAVE']; ?></td>
+                                            <td><?php echo $items['DES_RUTA']; ?></td>                                            
+                                            <td><?php echo $items['IDENTIFICADOR']; ?></td> 
+                                            <td><?php echo $items['INICIO']; ?></td>
+                                            <td><?php echo $items['FIN']; ?></td>
+                                            <td><?php echo $items['STATUS_VIAJE'];?></td>
+                                            <td class="text-center">
+                                                <a href="/monitor/map/index?catId=<?php echo $items['ID_VIAJE']; ?>">
+                                                    <button class="btn-info"> <i class="icon-info-sign icon-white"></i></button>
+                                                </a>
+                                            </td>
+                                        </tr>    
+                                        <?php endforeach;?>
+                                    </tbody>
+                                </table>                                
+                            </div>
+                            <div class="tab-pane" id="tab4">
+
+                                <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="dataTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Cliente</th>    
+                                            <th>Clave Viaje</th>
+                                            <th>Ruta</th>
+                                            <th>Unidad (ECO)</th>
+                                            <th>Fecha Prog. Inicio</th>
+                                            <th>Fecha Prog. Fin</th>
+                                            <th>Estatus</th>
+                                            <th> </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>                                
+                                        <?php foreach($this->aAssignFinish as $key => $items): ?>  
+                                        <tr class="odd gradeX">
+                                            <td><?php echo $items['CLIENTE']; ?></td>
+                                            <td><?php echo $items['CLAVE']; ?></td>
+                                            <td><?php echo $items['DES_RUTA']; ?></td>  
+                                            <td><?php echo $items['IDENTIFICADOR']; ?></td>                                           
+                                            <td><?php echo $items['INICIO']; ?></td>
+                                            <td><?php echo $items['FIN']; ?></td>
+                                            <td><?php echo $items['STATUS_VIAJE'];?></td>
+                                            <td class="text-center">
+                                                <a href="/monitor/map/index?catId=<?php echo $items['ID_VIAJE']; ?>">
+                                                    <button class="btn-info"> <i class="icon-info-sign icon-white"></i></button>
+                                                </a>
+                                            </td>
+                                        </tr>    
+                                        <?php endforeach;?>
+                                    </tbody>
+                                </table>    
+
+                            </div>                                                                                    
+                        </div>    
+
+                    </div>
+                </div>
+            </div>
+		</div>
+	</div>
+
+<div class="modal fade hide modal-lg" id="MyModalSearch" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+  <div class="modal-dialog ">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" >Asignar Monitorista</h4>
+      </div>
+      <div class="modal-form i-body">             
+        <input type="hidden" id="idTravel" value="-1" />
+        <img id="loader1" class="offset4" src="/images/assets/loading.gif" alt="loading gif"/>
+        <iframe class="hmodal500" id="iFrameSearch" src="" style="zoom:0" frameborder="0"></iframe>
+      </div>
+    </div>
+  </div>
+</div> 
+
+<div class="modal fade hide modal-lg" id="MyModalReassign" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+  <div class="modal-dialog ">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" >Re-Asignar Monitorista</h4>
+      </div>
+      <div class="modal-form i-body">             
+        <input type="hidden" id="idTravelReassign" value="-1" />
+        <img id="loadeReasign" class="offset4" src="/images/assets/loading.gif" alt="loading gif"/>
+        <iframe class="hmodal500" id="iFrameReasign" src="" style="zoom:0" frameborder="0"></iframe>
+      </div>
+    </div>
+  </div>
+</div>    
+
+<div class="modal fade hide" id="myModalOptions" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="tittleMessage">Terminar el Viaje</h4>
+      </div>
+      <div class="modal-body i-body">  
+        <div id="divMessage"></div>
+      </div>
+    </div>
+  </div>
+</div> 

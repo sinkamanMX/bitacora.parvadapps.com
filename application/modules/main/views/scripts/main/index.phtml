@@ -1,0 +1,39 @@
+<?php $this->headScript()->appendFile('/js/modules/login.js') ?> 
+<body id="login">
+  <div class="container">
+    <div class="span7 offset2 login-form">
+        <div class="navbar navbar-inner block-header">
+            <div class="muted pull-left">Login</div>
+        </div>
+        <div class="block-content collapse in">
+          <div id="divpErrorLogin" class="alert alert-error" style="display:none;">
+              <button type="button" class="close" data-dismiss="alert">×</button>
+              <h4>Error</h4>
+
+              <div id="pErrorLogin"></div>
+          </div>
+        <div class="span2">
+            <img src="/images/gtp_logo.png" class="img m-top-30" />
+          </div>
+          <div class="span4">
+            <form class="form-signin">
+              <h2 class="form-signin-heading"></h2>
+              <input name="inputUser" id="inputUser" type="text" class="input-block-level" placeholder="Usuario">
+              <input name="inputPassword" id="inputPassword" type="password" class="input-block-level" placeholder="Contraseña">             
+              <div class="text-right" style="height:30px;">
+                <a href="/main/recover/index">Recuperar Contraseña</a>   
+                <br/>             
+                <!--<a href="">Registrarme como Transportista</a>
+                <input id="checkRemember" name="checkRemember" type="checkbox" value="remember-me"> Recordar Datos-->
+              </div>
+              <div class="text-right">
+                <a href="/register/main/index" >
+                    <button class="btn btn-large btn-warning" type="button">Registrarme</button> </a>
+                <button class="btn btn-large btn-primary" type="button" onClick="validateLogin()">Ingresar</button>  
+              </div>
+            </form>
+          </div>
+        </div>
+    </div>
+  </div> <!-- /container -->
+</body>

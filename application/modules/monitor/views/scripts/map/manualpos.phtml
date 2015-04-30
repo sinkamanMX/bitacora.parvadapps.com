@@ -1,0 +1,138 @@
+<?php $this->headScript()->appendFile('https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places') ?>
+<?php $this->headScript()->appendFile('/js/modules/manualPos.js') ?> 
+<?php $disabledOptions = ($this->dataUser['CLIENTE_UDA']==0) ? 'disabled': 'disabled'; ?>
+<?php if($this->insert):?>
+	<script>
+		parent.positionOk(<?php echo $this->catId; ?>);
+	</script>	
+<?php endif;?>
+
+<ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
+    <li class="active"><a href="#gral" data-toggle="tab">Datos del Viaje</a></li>
+    <li><a href="#incidencias" data-toggle="tab">Incidencias</a></li>
+</ul>
+
+<form method="POST" action="/monitor/map/manualpos" id="FormData" class="form-horizontal ">
+    <input type="hidden" id="catId" name="catId" value="<?php echo $this->catId; ?>" />
+    <input type="hidden" name="option" value="insert" />
+		<div id="my-tab-content" class="tab-content">
+		    <div class="tab-pane active" id="gral">
+				<fieldset>
+					<div class="row-span">
+						<div class="span6">
+							<div class="control-group">
+								<label class="control-label">Fecha<span class="required">*</span></label>
+								<div class="controls">
+									<input type="text" id="inputFecha" name="inputFecha" data-required="1" class="span4 m-wrap" value="" <?php echo $disabledOptions;?> >
+								</div>				
+							</div>
+						</div>
+						<div class="span6">
+							<div class="control-group">
+								<label class="control-label"></label>
+								<div class="controls">									
+									<?php if($this->aDataViaje['CLIENTE_UDA']==0):?>
+										<a onClick="enabledAll();parent.goToTrackSystem(<?php echo $this->catId; ?>);">
+											<span class="btn btn-info noEnterSubmit"> Ingresar sistema del Cliente</span>
+										</a>
+									<?php else: ?>
+										<a onClick="getPosition()"  id="btnGetPosition">
+											<span class="btn btn-info noEnterSubmit" id="btnGetPos"> Obtener Posición</span>
+										</a>
+									<?php endif; ?>
+								</div>
+							</div>							
+						</div>						
+					</div>				
+					<div class="row-span">
+						<div class="span6">
+							<div class="control-group">
+								<label class="control-label">Latitud<span class="required">*</span></label>
+								<div class="controls">
+									<input type="text" id="inputLatitud" name="inputLatitud" data-required="1" class="span4 m-wrap number" value="" <?php echo $disabledOptions;?>>
+								</div>
+							</div>
+						</div>
+						<div class="span6">
+							<div class="control-group">
+								<label class="control-label">Longitud<span class="required">*</span></label>
+								<div class="controls">
+									<input type="text" id="inputLongitud" name="inputLongitud" data-required="1" class="span4 m-wrap number" value="<?php echo (@$this->data['DESCRIPCION']); ?>" <?php echo $disabledOptions;?>>
+								</div>
+							</div>							
+						</div>
+					</div>
+
+					<div class="row-span">
+						<div class="span6">
+							<div class="control-group">
+								<label class="control-label">Ángulo<span class="required">*</span></label>
+								<div class="controls">
+									<input type="text" id="inputAngulo" name="inputAngulo" data-required="1" class="span2 m-wrap number" value="" <?php echo $disabledOptions;?> >
+								</div>
+							</div>
+						</div>
+						<div class="span6">
+							<div class="control-group">
+								<label class="control-label">Velocidad<span class="required">*</span></label>
+								<div class="controls">
+									<input type="text" id="inputVelocidad" name="inputVelocidad" data-required="1" class="span2 m-wrap number" value="" <?php echo $disabledOptions;?> >
+								</div>
+							</div>							
+						</div>
+					</div>		
+
+					<div class="row-span">
+						<div class="span12">
+							<div class="control-group">
+								<label class="control-label">Ubicación<span class="required">*</span></label>
+								<div class="controls">
+									<input placeholder="Buscar dirección" type="text" value=""  name="inputDir" id="inputDir" data-rule-required="true"  data-required="1" class="span10 form-control noEnterSubmit" <?php echo $disabledOptions;?> />
+								</div>
+							</div>
+						</div>						
+					</div>
+					<div class="row-span">
+
+						<div class="span6">
+							<div class="control-group">
+								<label class="control-label">Comentario<span class="required">*</span></label>
+								<div class="controls">
+									<textarea id="inputObservaciones" name="inputObservaciones" class="form-control" rows="3" ></textarea>
+								</div>
+							</div>							
+						</div>
+					</div>	
+				</fieldset>
+			</div>
+		    <div class="tab-pane" id="incidencias">
+				<fieldset>
+					<div class="control-group">
+						<label class="control-label">Tipo de Incidencia<span class="required">*</span></label>
+						<div class="controls">
+							<select class="span4 m-wrap" id="inputIncidencia" name="inputIncidencia" >
+								<option value="">Seleccionar una opción</option>
+			                    <?php foreach ($this->incidencias as $key => $item): ?>
+			                        <option value="<?php echo $item['ID_INCIDENCIA']?>"><?php echo $item['DESCRIPCION']?></option>
+			                    <?php endforeach; ?>
+							</select>									
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label">Comentario<span class="required">*</span></label>
+						<div class="controls"> 
+							<textarea id="inputComentario" name="inputComentario" class="form-control" rows="3" ></textarea>
+						</div>
+					</div>
+				</fieldset>
+			</div>	
+		</div>
+								
+		<div class="span12">
+	    	<div class="col-xs-4 col-md-5">
+				<div class="pull-right">			
+					<button type="submit" class="btn btn-default bg-btn-send">Enviar</button>
+				</div>    
+	    	</div>						
+		</div>
+</form>

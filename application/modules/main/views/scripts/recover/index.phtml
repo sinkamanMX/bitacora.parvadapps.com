@@ -1,0 +1,40 @@
+<?php $this->headScript()->appendFile('/js/modules/validateRecovery.js') ?> 
+<body id="login">
+  <div class="container">
+    <div class="span5 offset3 login-form">
+        <div class="navbar navbar-inner block-header">
+            <div class="muted pull-left">Recuperar Contraseña</div>
+        </div>
+        <div class="block-content collapse in">               
+            <?php if(@$this->aErrors['eUsuario']):?>
+                <div class="alert alert-danger" style="display:block;">
+                  <button type="button" class="close" data-dismiss="alert">×</button>
+                  <h4>Error</h4>
+                  <div>El usuario no se encuentra registrado, favor de contactar con su adminsitrador.</div>
+                  <br/>
+                  <a href="/main/main/index">Regresar</a>
+                </div>
+            <?php endif;?>
+
+            <?php if(@$this->resultOp=='okRegister'):?>
+                <div class="alert alert-success alert-dismissable">
+                    <i class="fa fa-check"></i>
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <b>!Atención¡</b> Se ha enviado un correo electrónico, favor de verificar su bandeja de entrada.<br/>
+                    Tambien es recomendable verificar en la carpeta de Spam (Correo no deseado).<br/>
+                  <a href="/main/main/index">Regresar</a>
+                </div>                
+            <?php else:?>
+              <form role="form" method="POST" action="/main/recover/index" id="FormData" >
+                  <input type="hidden" name="optReg" value="<?php echo ($this->optRegister>0) ? 'rememeber': '';?>" />
+                <span><b>Ingrese el nombre de usuario (E-mail)</b></span>     
+                <input name="inputUser" id="inputUser" type="text" autocomplete="off" class="input-block-level" placeholder="Usuario">
+                <div class="text-right">                
+                  <button type="submit" class="btn btn-large btn-primary" type="button" >Recuperar</button>  
+                </div>
+              </form>
+            <?php endif;?>  
+        </div>
+    </div>
+  </div> <!-- /container -->
+</body>

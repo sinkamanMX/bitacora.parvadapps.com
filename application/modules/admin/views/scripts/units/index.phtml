@@ -1,0 +1,72 @@
+<?php $this->headScript()->appendFile('/js/modules/gralTables.js') ?>   
+<?php $this->headScript()->appendFile('/js/modules/admin/validateUnits.js') ?>   
+    <div class="row panel-data">
+        <input id="hRefLinkEdit" type="hidden" value="/admin/units/getinfo?idRow=" />
+		<div class="span12">
+			<!-- block -->
+            <div class="block">
+                <div class="navbar navbar-inner block-header">
+                    <div class="muted pull-left">Unidades</div>
+                </div>
+                <div class="block-content collapse in">
+                    <div class="span12">
+                        <?php if($this->dataUser['INSERTAR']==1): ?>
+                            <div class="table-toolbar">
+                                <div class="btn-group">
+                                 <a href="/admin/units/getinfo?catId=-1"><button class="btn btn-success"> Agregar <i class="icon-plus icon-white"></i></button></a>
+                                </div>
+                                <?php if($this->dataUser['CLIENTE_UDA']==1):?>
+                                    <div class="btn-group">
+                                        <a href="/admin/units/migrate"><button class="btn btn-success"> Migrar unidades Ovision <i class="icon-plus icon-white"></i></button></a>
+                                    </div>
+                                <?php endif;?>
+                            </div>  
+                        <?php endif;?>                          
+                        <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="dataTable">
+                            <thead>
+                                <tr>
+                                    <th>Económico</th>
+                                    <th>Placas</th>
+                                    <th>Descripción</th>
+                                    <th>Opciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>                                
+                                <?php foreach($this->datatTable as $key => $items): ?>  
+                                <tr class="odd gradeX">
+                                    <td><?php echo $items['IDENTIFICADOR']; ?></td>
+                                    <td><?php echo $items['PLACAS']; ?></td>
+                                    <td><?php echo $items['ECONOMICO']; ?></td>
+                                    <td class="text-center">
+                                        <?php if($this->dataUser['LECTURA']==1): ?>
+                                            <a href="/admin/units/getinfo?catId=<?php echo $items['ID_UNIDAD']; ?>"><button class="btn btn-primary"> <i class="icon-eye-open icon-white"></i></button></a>   
+                                        <?php endif;?> 
+                                        <?php if($this->dataUser['ELIMINAR']==1): ?>
+                                            <a href="javascript:confirmDelete('<?php echo $items['ID_UNIDAD']; ?>')"><button class="btn btn-danger"> <i class="icon-trash icon-white"></i></button></a>
+                                        <?php endif;?>
+                                    </td>
+                                </tr>    
+                                <?php endforeach;?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- /block -->
+		</div>
+	</div>   
+
+<div id="modalConfirmDelete" class="modal hide">
+    <div class="modal-header">
+        <button data-dismiss="modal" class="close" type="button">&times;</button>
+        <h3>Atención!</h3>
+    </div>
+    <div class="modal-body">
+        <p>¿Realmente desea eliminar este registro?</p>
+    </div>
+    <div class="modal-footer">
+        <input type="hidden" id="inputDelete" value="-1"/>
+        <a class="btn btn-primary" href="javascript:deleteRow();">Eliminar</a>
+        <a data-dismiss="modal" class="btn" href="#">Cancelar</a>
+    </div>
+</div>    
